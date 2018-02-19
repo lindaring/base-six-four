@@ -1,4 +1,14 @@
+logging:
+  level:
+    org:
+      springframework.web: debug
+      hibernate: ERROR
+    com.lindaring.base: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file: C:/Users/Lindaring/IdeaProjects/base64.log
+
 custom:
   messages:
-    exception:
-      invalidString: Invalid string entered. Cannot convert null and empty strings.
+    invalidString: Invalid string entered. Cannot convert null and empty strings.
