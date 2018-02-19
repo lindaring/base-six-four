@@ -1,0 +1,4 @@
+custom:
+  messages:
+    exception:
+      invalidString: Invalid string entered. Cannot convert null and empty strings.
