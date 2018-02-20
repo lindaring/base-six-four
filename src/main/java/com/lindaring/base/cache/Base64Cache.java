@@ -1,5 +1,6 @@
 package com.lindaring.base.cache;
 
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
@@ -17,4 +18,13 @@ public class Base64Cache {
         return "";
     }
 
+    @CacheEvict(value = "BASE_64_CACHE", key = "#key")
+    public void removeCache(String key) {
+        return;
+    }
+
+    @CacheEvict(value = "BASE_64_CACHE", allEntries = true)
+    public void removeAll () {
+        return;
+    }
 }
