@@ -1,5 +1,6 @@
 package com.lindaring.base.controller;
 
+import com.lindaring.base.cache.Base64Cache;
 import com.lindaring.base.enumerator.Charset;
 import com.lindaring.base.service.BaseSixFourService;
 import io.swagger.annotations.ApiOperation;
@@ -18,6 +19,9 @@ public class BaseSixFourController {
     @Autowired
     private BaseSixFourService baseService;
 
+    @Autowired
+    private Base64Cache cache;
+
     @ApiOperation(notes = "Base 64 encoded string", value = "Base 64 encoded string")
     @RequestMapping(value = "/encode/{string}", method = RequestMethod.GET)
     public String encodeString(
@@ -34,6 +38,13 @@ public class BaseSixFourController {
             @ApiParam(value = "Output charset", required = true) @RequestParam Charset charset)
             throws InvalidNameException, UnsupportedEncodingException {
         return baseService.getDecodedBase64(string, charset);
+    }
+
+    @ApiOperation(notes = "Base 64 encoded string", value = "Base 64 encoded string")
+    @RequestMapping(value = "/cache/{string}", method = RequestMethod.GET)
+    public String getCache(
+            @ApiParam(value = "Encoded string", required = true) @PathVariable String string)  {
+        return cache.getCache(string);
     }
 
 }
