@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.naming.InvalidNameException;
+import java.io.UnsupportedEncodingException;
 
 @CrossOrigin
 @RestController
@@ -16,12 +17,20 @@ public class BaseSixFourController {
     @Autowired
     private BaseSixFourService baseService;
 
-    @ApiOperation(notes = "Convert string to base 64 encoded string", value = "Convert string to base 64 encoded string")
+    @ApiOperation(notes = "Base 64 encoded string", value = "Base 64 encoded string")
     @RequestMapping(value = "/encode/{string}", method = RequestMethod.GET)
-    public String getEncodedString(
+    public String encodeString(
             @ApiParam(value = "Return encoded string", required = true) @PathVariable String string)
-            throws InvalidNameException {
+            throws InvalidNameException, UnsupportedEncodingException {
         return baseService.getEncodedBase64(string);
+    }
+
+    @ApiOperation(notes = "Base 64 decode string", value = "Base 64 decode string")
+    @RequestMapping(value = "/decode/{string}", method = RequestMethod.GET)
+    public String decodeString(
+            @ApiParam(value = "Return decoded string", required = true) @PathVariable String string)
+            throws InvalidNameException, UnsupportedEncodingException {
+        return baseService.getDecodedBase64(string);
     }
 
 }
