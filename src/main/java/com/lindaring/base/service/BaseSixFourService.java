@@ -44,8 +44,8 @@ public class BaseSixFourService {
             byte[] base64Byte = Base64Utils.encode(nonBase64.getBytes());
             base64 = new String(base64Byte, Charset.getValue(charset));
 
-            cache.cacheBase(nonBase64, base64);
-            cache.cacheBase(base64, nonBase64);
+            cache.cachePut(nonBase64, base64);
+            cache.cachePut(base64, nonBase64);
         }
 
         log.debug(format("Exiting :: getEncodedBase64 with :: [%s]", base64));
@@ -70,8 +70,8 @@ public class BaseSixFourService {
             byte[] base64Byte = Base64Utils.decode(base64Encoded.getBytes());
             nonBase64 = new String(base64Byte, Charset.getValue(charset));
 
-            cache.cacheBase(base64Encoded, nonBase64);
-            cache.cacheBase(nonBase64, base64Encoded);
+            cache.cachePut(base64Encoded, nonBase64);
+            cache.cachePut(nonBase64, base64Encoded);
         }
 
         log.debug(format("Exiting :: getEncodedBase64 with :: [%s]", nonBase64));

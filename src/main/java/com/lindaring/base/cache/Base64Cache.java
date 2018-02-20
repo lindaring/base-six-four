@@ -11,7 +11,7 @@ public class Base64Cache {
     private final String base64 = "BASE_64_CACHE";
 
     @CachePut(value = base64, key = "#key")
-    public String cacheBase(String key, String value) {
+    public String cachePut(String key, String value) {
         return value;
     }
 
