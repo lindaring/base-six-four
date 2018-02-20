@@ -7,7 +7,6 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.guava.GuavaCacheManager;
 import org.springframework.context.annotation.Bean;
 
-@EnableCaching
 @SpringBootApplication
 public class BaseSixFourApiApplication {
 
@@ -15,9 +14,4 @@ public class BaseSixFourApiApplication {
         SpringApplication.run(BaseSixFourApiApplication.class, args);
     }
 
-    @Bean
-    public CacheManager cacheManager() {
-        GuavaCacheManager cacheManager = new GuavaCacheManager("BASE_64_CACHE");
-        return cacheManager;
-    }
 }
