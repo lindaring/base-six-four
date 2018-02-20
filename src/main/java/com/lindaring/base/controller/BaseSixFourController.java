@@ -1,5 +1,6 @@
 package com.lindaring.base.controller;
 
+import com.lindaring.base.enumerator.Charset;
 import com.lindaring.base.service.BaseSixFourService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -20,17 +21,19 @@ public class BaseSixFourController {
     @ApiOperation(notes = "Base 64 encoded string", value = "Base 64 encoded string")
     @RequestMapping(value = "/encode/{string}", method = RequestMethod.GET)
     public String encodeString(
-            @ApiParam(value = "Return encoded string", required = true) @PathVariable String string)
+            @ApiParam(value = "Encoded string", required = true) @PathVariable String string,
+            @ApiParam(value = "Output charset", required = true) @RequestParam Charset charset)
             throws InvalidNameException, UnsupportedEncodingException {
-        return baseService.getEncodedBase64(string);
+        return baseService.getEncodedBase64(string, charset);
     }
 
     @ApiOperation(notes = "Base 64 decode string", value = "Base 64 decode string")
     @RequestMapping(value = "/decode/{string}", method = RequestMethod.GET)
     public String decodeString(
-            @ApiParam(value = "Return decoded string", required = true) @PathVariable String string)
+            @ApiParam(value = "Decoded string", required = true) @PathVariable String string,
+            @ApiParam(value = "Output charset", required = true) @RequestParam Charset charset)
             throws InvalidNameException, UnsupportedEncodingException {
-        return baseService.getDecodedBase64(string);
+        return baseService.getDecodedBase64(string, charset);
     }
 
 }

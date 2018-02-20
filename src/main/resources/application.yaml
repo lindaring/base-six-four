@@ -2,8 +2,8 @@ logging:
   level:
     org:
       springframework.web: debug
-      hibernate: ERROR
-    com.lindaring.base: DEBUG
+      hibernate: error
+    com.lindaring.base: debug
 
 custom:
   messages:

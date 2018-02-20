@@ -1,4 +1,4 @@
-package com.lindaring.base;
+package com.lindaring.base.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
