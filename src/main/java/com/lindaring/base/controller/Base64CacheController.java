@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @RestController
 @RequestMapping(value = "/base-six-four/v1/cache")
-public class CacheController {
+public class Base64CacheController {
 
     @Autowired
     private Base64Cache cache;

@@ -1,7 +1,7 @@
 package com.lindaring.base.controller;
 
 import com.lindaring.base.enumerator.Charset;
-import com.lindaring.base.service.BaseSixFourService;
+import com.lindaring.base.service.Base64Service;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,15 +13,15 @@ import java.io.UnsupportedEncodingException;
 @CrossOrigin
 @RestController
 @RequestMapping(value = "/base-six-four/v1/base64")
-public class BaseSixFourController {
+public class Base64Controller {
 
     @Autowired
-    private BaseSixFourService baseService;
+    private Base64Service baseService;
 
     @ApiOperation(notes = "Base 64 encoded string", value = "Base 64 encoded string")
     @RequestMapping(value = "/encode/{string}", method = RequestMethod.GET)
     public String encodeString(
-            @ApiParam(value = "String to encode", required = true) @PathVariable String string,
+            @ApiParam(value = "String to encode ", required = true) @PathVariable String string,
             @ApiParam(value = "Output charset", required = true) @RequestParam Charset charset)
             throws InvalidNameException, UnsupportedEncodingException {
         return baseService.getEncodedBase64(string, charset);

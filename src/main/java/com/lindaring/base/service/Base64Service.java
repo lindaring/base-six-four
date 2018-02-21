@@ -16,9 +16,9 @@ import java.io.UnsupportedEncodingException;
 import static java.lang.String.format;
 
 @Service
-public class BaseSixFourService {
+public class Base64Service {
 
-    private static final Logger log = LoggerFactory.getLogger(BaseSixFourService.class);
+    private static final Logger log = LoggerFactory.getLogger(Base64Service.class);
 
     @Autowired
     private Base64Cache cache;
