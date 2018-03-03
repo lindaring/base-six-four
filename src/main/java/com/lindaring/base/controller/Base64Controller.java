@@ -1,6 +1,7 @@
 package com.lindaring.base.controller;
 
 import com.lindaring.base.enumerator.Charset;
+import com.lindaring.base.model.Base64;
 import com.lindaring.base.service.Base64Service;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -21,7 +22,7 @@ public class Base64Controller {
 
     @ApiOperation(notes = "Base 64 encoded string", value = "Base 64 encoded string")
     @RequestMapping(value = "/encode/{string}", method = RequestMethod.GET)
-    public String encodeString(
+    public Base64 encodeString(
             @ApiParam(value = "String to encode ", required = true) @PathVariable String string,
             @ApiParam(value = "Output charset", required = true) @RequestParam Charset charset)
             throws InvalidNameException, UnsupportedEncodingException {
@@ -30,7 +31,7 @@ public class Base64Controller {
 
     @ApiOperation(notes = "Base 64 decode string", value = "Base 64 decode string")
     @RequestMapping(value = "/decode/{string}", method = RequestMethod.GET)
-    public String decodeString(
+    public Base64 decodeString(
             @ApiParam(value = "String to decode", required = true) @PathVariable String string,
             @ApiParam(value = "Output charset", required = true) @RequestParam Charset charset)
             throws InvalidNameException, UnsupportedEncodingException {
