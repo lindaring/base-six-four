@@ -25,7 +25,8 @@ public class SwaggerConfig {
     private Predicate<String> postPaths() {
         return or(
                 regex("/base-six-four/v1/base64.*"),
-                regex("/base-six-four/v1/cache.*")
+                regex("/base-six-four/v1/cache.*"),
+                regex("/base-six-four/v1/general.*")
         );
     }
 
