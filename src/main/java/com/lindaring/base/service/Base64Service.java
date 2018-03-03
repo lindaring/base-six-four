@@ -12,6 +12,7 @@ import org.springframework.util.StringUtils;
 
 import javax.naming.InvalidNameException;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 import static java.lang.String.format;
 
@@ -76,6 +77,14 @@ public class Base64Service {
 
         log.debug(format("Exiting :: getEncodedBase64 with :: [%s]", nonBase64));
         return nonBase64;
+    }
+
+    /**
+     * Get a list of all charset keys.
+     * @return charset keys.
+     */
+    public List getCharsets() {
+        return Charset.getCharsetKeys();
     }
 
     private void validateInput(String input) throws InvalidNameException {

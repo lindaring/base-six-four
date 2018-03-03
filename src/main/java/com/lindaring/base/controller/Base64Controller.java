@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.naming.InvalidNameException;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -34,6 +35,12 @@ public class Base64Controller {
             @ApiParam(value = "Output charset", required = true) @RequestParam Charset charset)
             throws InvalidNameException, UnsupportedEncodingException {
         return baseService.getDecodedBase64(string, charset);
+    }
+
+    @ApiOperation(notes = "Retrieve list of charset keys", value = "Retrieve list of charset keys")
+    @RequestMapping(value = "/charset/list", method = RequestMethod.GET)
+    public List getCharsetKeys() {
+        return baseService.getCharsets();
     }
 
 }

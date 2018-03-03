@@ -1,5 +1,9 @@
 package com.lindaring.base.enumerator;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public enum Charset {
 
     UTF8("UTF-8"),
@@ -19,6 +23,12 @@ public enum Charset {
 
     public static String getValue(Charset charset) {
         return charset.value;
+    }
+
+    public static List getCharsetKeys() {
+        List values = new ArrayList<>();
+        Arrays.stream(values()).forEach(x -> values.add(x.name()));
+        return values;
     }
 
 }
