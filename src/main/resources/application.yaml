@@ -1,0 +1,16 @@
+logging:
+  level:
+    org:
+      springframework:
+        web: debug
+      hibernate: error
+    com:
+      lindaring:
+        base: debug
+
+custom:
+  messages:
+    invalidString: Invalid string entered. Cannot convert null and empty strings.
+
+caching:
+  base64: BASE_64_CACHE
