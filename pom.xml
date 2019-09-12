@@ -4,7 +4,7 @@
     
     <groupId>com.lindaring.base</groupId>
     <artifactId>base-six-four-api</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>3.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     
     <name>Base Six Four API</name>
@@ -96,7 +96,7 @@
                         <image>
                             <name>${docker.image.prefix}/${docker.image.name}</name>
                             <build>
-                                <dockerFileDir>${project.basedir}/src/main/docker/</dockerFileDir>
+                                <dockerFileDir>${project.basedir}/target/dockerfile/</dockerFileDir>
                                 <assembly>
                                     <descriptorRef>artifact</descriptorRef>
                                 </assembly>
@@ -108,6 +108,32 @@
                         </image>
                     </images>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.gmavenplus</groupId>
+                <artifactId>gmavenplus-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <scripts>
+                        <script>file:///${project.basedir}/src/main/scripts/BuildDockerfile.groovy</script>
+                    </scripts>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.codehaus.groovy</groupId>
+                        <artifactId>groovy-all</artifactId>
+                        <version>2.4.8</version><!-- any version of Groovy \>= 1.5.0 should work here -->
+                        <scope>runtime</scope>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
