@@ -73,7 +73,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <docker.image.prefix>lindaring</docker.image.prefix>
-        <docker.image.name>lindaring-base-six-four</docker.image.name>
+        <docker.image.name>lindaring-base-six-four-api</docker.image.name>
     </properties>
     
     <build>
@@ -91,9 +91,6 @@
                 <version>0.20.0</version>
 
                 <configuration>
-                    <!--<dockerHost>http://127.0.0.1:2375</dockerHost>-->
-                    <!--<dockerHost>unix:///var/run/docker.sock</dockerHost>-->
-                    <dockerHost>tcp://192.168.99.102:2375</dockerHost>
                     <verbose>true</verbose>
                     <images>
                         <image>
