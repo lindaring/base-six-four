@@ -26,7 +26,8 @@ public class SwaggerConfig {
         return or(
                 regex("/base-six-four/v1/base64.*"),
                 regex("/base-six-four/v1/cache.*"),
-                regex("/base-six-four/v1/general.*")
+                regex("/base-six-four/v1/general.*"),
+                regex("/base-six-four/v1/user.*")
         );
     }
 
