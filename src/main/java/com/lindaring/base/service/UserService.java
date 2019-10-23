@@ -1,7 +1,6 @@
 package com.lindaring.base.service;
 
 import com.lindaring.base.entity.Visitor;
-import com.lindaring.base.model.GeneralResponse;
 import com.lindaring.base.repo.VisitorsRepo;
 import com.lindaring.base.utils.GeneralUtils;
 import org.slf4j.Logger;
