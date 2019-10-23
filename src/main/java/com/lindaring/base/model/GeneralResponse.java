@@ -8,6 +8,6 @@ import lombok.*;
 @Setter
 @ToString
 public class GeneralResponse {
-    private String name;
+    private boolean success;
 }
 

@@ -14,3 +14,13 @@ custom:
 
 caching:
   base64: BASE_64_CACHE
+
+spring:
+  datasource:
+    url: jdbc:mysql://178.128.255.183:80/db_base_six_four?useSSL=false
+    username: root
+    password: 211021555
+    driver-class-name: com.mysql.jdbc.Driver
+    hikari:
+      connection-timeout: 3000
+      maximum-pool-size: 5
