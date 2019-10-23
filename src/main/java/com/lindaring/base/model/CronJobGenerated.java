@@ -5,7 +5,6 @@ import lombok.Data;
 
 @AllArgsConstructor
 @Data
-public class CronJob {
-  private String expression;
-  private String description;
+public class CronJobGenerated {
+  private String cronFormat;
 }

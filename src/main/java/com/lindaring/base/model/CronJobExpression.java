@@ -5,7 +5,7 @@ import lombok.Data;
 
 @AllArgsConstructor
 @Data
-public class CronJob {
-  private String expression;
-  private String description;
+public class CronJobExpression {
+  private String seconds;
+  private String minutes;
 }
