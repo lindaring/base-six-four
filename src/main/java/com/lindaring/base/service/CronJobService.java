@@ -5,6 +5,7 @@ import com.cronutils.model.Cron;
 import com.cronutils.model.definition.CronDefinition;
 import com.cronutils.model.definition.CronDefinitionBuilder;
 import com.cronutils.parser.CronParser;
+import com.lindaring.base.enumerator.CronFrequency;
 import com.lindaring.base.exception.ParamsException;
 import com.lindaring.base.model.CronJob;
 import com.lindaring.base.model.CronJobExpression;
@@ -23,6 +24,8 @@ public class CronJobService {
 
   private static final Logger log = LoggerFactory.getLogger(CronJobService.class);
 
+  private static final String DEFAULT_CRON = "* * * * * ? *";
+
   public CronJob getCronJobDescription(CronJob cronJob) throws ParamsException {
     if (stringEmpty(cronJob.getExpression()))
       throw new ParamsException("Provide the cron job expression");
@@ -40,13 +43,32 @@ public class CronJobService {
     }
   }
 
-  public CronJobGenerated createCronJob(CronJobExpression cronJob) {
-    StringBuilder expression = new StringBuilder();
-    expression.append(stringEmpty(cronJob.getSeconds()) ? "*" : cronJob.getSeconds()).append(" ");
-    expression.append(stringEmpty(cronJob.getMinutes()) ? "*" : cronJob.getMinutes());
+  public CronJobGenerated createCronJob(CronFrequency frequency, CronJobExpression cronJob) {
+    String expression = "";
 
-    expression.append(" * * * * ? *");
-    CronJobGenerated generated = new CronJobGenerated(expression.toString());
+    if (frequency == CronFrequency.SECONDS && !stringEmpty(cronJob.getSeconds()))
+      expression = createSecondsCronJob(cronJob);
+    else if (frequency == CronFrequency.MINUTES && !stringEmpty(cronJob.getMinutes()))
+      expression = createMinutesCronJob(cronJob);
+    else if (frequency == CronFrequency.HOURLY && !stringEmpty(cronJob.getHour()))
+      expression = createHourCronJob(cronJob);
+    else
+      expression = DEFAULT_CRON;
+
+    CronJobGenerated generated = new CronJobGenerated(expression);
     return generated;
   }
+
+  private String createSecondsCronJob(CronJobExpression cronJob) {
+    return ("0/" + cronJob.getSeconds()) + " * * * * ? *";
+  }
+
+  private String createMinutesCronJob(CronJobExpression cronJob) {
+    return "0 " + ("0/" + cronJob.getMinutes()) + " * * * ? *";
+  }
+
+  private String createHourCronJob(CronJobExpression cronJob) {
+    return "0 0 " + ("0/" + cronJob.getHour()) + " * * ? *";
+  }
+
 }

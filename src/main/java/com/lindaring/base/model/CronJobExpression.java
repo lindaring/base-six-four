@@ -8,4 +8,5 @@ import lombok.Data;
 public class CronJobExpression {
   private String seconds;
   private String minutes;
+  private String hour;
 }
