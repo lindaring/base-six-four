@@ -16,6 +16,12 @@ caching:
   base64: BASE_64_CACHE
 
 spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
   datasource:
     url: jdbc:mysql://178.128.255.183:80/db_base_six_four?useSSL=false
     username: root

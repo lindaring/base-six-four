@@ -24,8 +24,8 @@ public class UserController {
     @PostMapping(value="/")
     @ApiOperation(notes = "Record user", value = "Record user")
     public ResponseEntity<GeneralResponse> recordUser(HttpServletRequest httpRequest) {
-        GeneralResponse reponse = userService.recordUser(httpRequest);
-        return new ResponseEntity<>(reponse, HttpStatus.CREATED);
+        userService.recordUser(httpRequest);
+        return new ResponseEntity<>(new GeneralResponse(true), HttpStatus.CREATED);
     }
 
 }
