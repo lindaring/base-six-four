@@ -1,6 +1,7 @@
 package com.lindaring.base.service;
 
 import com.lindaring.base.entity.Visitor;
+import com.lindaring.base.model.User;
 import com.lindaring.base.repo.VisitorsRepo;
 import com.lindaring.base.utils.GeneralUtils;
 import org.slf4j.Logger;
@@ -21,11 +22,12 @@ public class UserService {
     private VisitorsRepo visitorsRepo;
 
     @Async
-    public void recordUser(HttpServletRequest httpRequest) {
+    public void recordUser(HttpServletRequest httpRequest, User user) {
         try {
             String ip = GeneralUtils.getClientIp(httpRequest);
             String userAgent = GeneralUtils.getUserAgent(httpRequest);
-            Visitor visitor = new Visitor(0, ip, new Date(), userAgent);
+
+            Visitor visitor = new Visitor(0, ip, new Date(), userAgent, user.getUrl());
             visitorsRepo.save(visitor);
         } catch (Exception e) {
             log.error("Could not record visitor.", e);

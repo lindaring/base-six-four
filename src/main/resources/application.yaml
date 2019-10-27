@@ -23,7 +23,7 @@ spring:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
   datasource:
-    url: jdbc:mysql://178.128.255.183:80/db_base_six_four?useSSL=false
+    url: jdbc:mysql://178.128.255.183:80/db_base_six_four?useSSL=false&serverTimezone=CAT
     username: root
     password: 211021555
     driver-class-name: com.mysql.jdbc.Driver

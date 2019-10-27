@@ -7,3 +7,6 @@ CREATE TABLE visitors (
     ip varchar(255),
     browser varchar(255)
 );
+
+ALTER TABLE visitors ADD COLUMN insertDate DATETIME;
+ALTER TABLE visitors ADD COLUMN url VARCHAR(255);

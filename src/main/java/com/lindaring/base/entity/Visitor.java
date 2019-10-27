@@ -22,4 +22,5 @@ public class Visitor {
     @Column(name="insertDate")
     private Date insertDate;
     private String browser;
+    private String url;
 }
