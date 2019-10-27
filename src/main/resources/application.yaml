@@ -30,6 +30,19 @@ spring:
     hikari:
       connection-timeout: 3000
       maximum-pool-size: 5
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: lindaring.developer.tools@gmail.com
+    password: wrhdwrcauyvzvxza
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            trust: smtp.gmail.com
+          starttls:
+            enable: true
 
 api:
   geolocation:
