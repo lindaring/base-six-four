@@ -1,5 +1,7 @@
 package com.lindaring.base.service;
 
+import com.lindaring.base.client.GeolocationClientService;
+import com.lindaring.base.client.model.Geolocation;
 import com.lindaring.base.entity.Visitor;
 import com.lindaring.base.model.User;
 import com.lindaring.base.repo.VisitorsRepo;
@@ -21,16 +23,48 @@ public class UserService {
     @Autowired
     private VisitorsRepo visitorsRepo;
 
+    @Autowired
+    private GeolocationClientService geolocationClientService;
+
     @Async
     public void recordUser(HttpServletRequest httpRequest, User user) {
         try {
             String ip = GeneralUtils.getClientIp(httpRequest);
             String userAgent = GeneralUtils.getUserAgent(httpRequest);
+            String location = null;
+            if (ip != null) {
+                Geolocation geoInfo = geolocationClientService.getLocation(ip);
+                location = getLocation(geoInfo);
+            }
 
-            Visitor visitor = new Visitor(0, ip, new Date(), userAgent, user.getUrl());
+            Visitor visitor = new Visitor(0, ip, new Date(), userAgent, user.getUrl(), location);
             visitorsRepo.save(visitor);
         } catch (Exception e) {
             log.error("Could not record visitor.", e);
         }
+    }
+
+    private String getLocation(Geolocation geolocation) {
+        StringBuilder builder = new StringBuilder();
+        if (geolocation.getContinentName() != null) {
+            builder.append(geolocation.getContinentName())
+                    .append(", ");
+        }
+        if (geolocation.getCountryName() != null) {
+            builder.append(geolocation.getCountryName())
+                    .append(", ");
+        }
+        if (geolocation.getRegionName() != null) {
+            builder.append(geolocation.getRegionName())
+                    .append(", ");
+        }
+        if (geolocation.getCity() != null) {
+            builder.append(geolocation.getCity())
+                    .append(", ");
+        }
+        if (geolocation.getLocation().getCapital() != null) {
+            builder.append(geolocation.getLocation().getCapital());
+        }
+        return builder.toString();
     }
 }

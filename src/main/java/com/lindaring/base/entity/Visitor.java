@@ -23,4 +23,5 @@ public class Visitor {
     private Date insertDate;
     private String browser;
     private String url;
+    private String location;
 }

@@ -10,3 +10,4 @@ CREATE TABLE visitors (
 
 ALTER TABLE visitors ADD COLUMN insertDate DATETIME;
 ALTER TABLE visitors ADD COLUMN url VARCHAR(255);
+ALTER TABLE visitors ADD COLUMN location varchar(255);

@@ -30,3 +30,8 @@ spring:
     hikari:
       connection-timeout: 3000
       maximum-pool-size: 5
+
+api:
+  geolocation:
+    key: 4b0842278fdc1afebd2f1f27d309a8b9
+    url: http://api.ipstack.com/
