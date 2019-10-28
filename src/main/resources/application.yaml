@@ -45,6 +45,12 @@ spring:
             enable: true
 
 api:
+  mail:
+    enabled: true
+    cron: "0 0 0 1/1 * ? *"
+    to: "lndsimelane@gmail.com"
+    subject: "Developer Tools Visitors Report"
+    body: "<html><head><style>body{font-family:'proxima-nova','proximanova','helveticaneue','helvetica','arial',sans-serif;margin:0;padding:0;}div#header{background:#ffc107;}div#header>img{max-width:35px;float:left;margin:5px;}div#header>h1{float:left;margin:5px;padding:0;color:#fff;}.clear{clear:both;}div#content{padding:010px;}</style></head><body><div id='header'><img src='http://lindaring.com/logo.png'/><h1>DeveloperTools</h1><div class='clear'></div></div><div id='content'><h1>Users for Today</h1><h3>#TODAYS_DATE</h3><p><strong>Visitors:</strong> #NUMBER_OF_USERS<br/><strong>Hits:</strong> #NUMBER_OF_HITS</p></div></body></html>"
   geolocation:
     key: 4b0842278fdc1afebd2f1f27d309a8b9
     url: http://api.ipstack.com/

@@ -1,5 +1,6 @@
 package com.lindaring.base.config;
 
+import com.lindaring.base.properties.MailProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,23 +24,30 @@ public class SchedulerConfig {
     @Autowired
     private JavaMailSender javaMailSender;
 
+    @Autowired
+    private MailProperties mailProperties;
+
     @Async
-    @Scheduled(cron = "0 0/1 * * * ?")
+    @Scheduled(cron = "${api.mail.cron}")
     public void scheduleFixedRateTaskAsync() throws MessagingException {
+        if (!mailProperties.isEnabled()) {
+            log.info("Developer tools visitors report email is disabled!");
+            return;
+        }
         MimeMessage msg = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(msg, true);
 
-        helper.setTo("lndsimelane@gmail.com");
-        helper.setSubject("Developer Tools Visitors");
+        helper.setTo(mailProperties.getTo());
+        helper.setSubject(mailProperties.getSubject());
 
-        String body = "<html><head><style>body { font-family: \"proxima-nova\", \"proxima nova\", \"helvetica neue\", \"helvetica\", \"arial\", sans-serif; }</style></head><body><h2>Users for Today (#TODAYS_DATE)</h2><p><strong>Visitors:</strong> #NUMBER_OF_USERS<br/><strong>Hits:</strong> #NUMBER_OF_HITS</p></body></html>";
-        body = body.replace("#TODAYS_DATE", new Date().toString());
-        body = body.replace("#NUMBER_OF_USERS", 3+"");
-        body = body.replace("#NUMBER_OF_HITS", 65+"");
+        String body = mailProperties.getBody()
+                .replace("#TODAYS_DATE", new Date().toString())
+                .replace("#NUMBER_OF_USERS", 3+"")
+                .replace("#NUMBER_OF_HITS", 65+"");
         helper.setText(body, true);
 
         javaMailSender.send(msg);
-        log.info("Today's email sent!");
+        log.info("Today's developer tools visitors report email was sent!");
     }
 
 }
