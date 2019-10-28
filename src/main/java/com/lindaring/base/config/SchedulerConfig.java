@@ -29,7 +29,7 @@ public class SchedulerConfig {
 
     @Async
     @Scheduled(cron = "${api.mail.cron}")
-    public void scheduleFixedRateTaskAsync() throws MessagingException {
+    public void sendDailyVisitorsReport() throws MessagingException {
         if (!mailProperties.isEnabled()) {
             log.info("Developer tools visitors report email is disabled!");
             return;
