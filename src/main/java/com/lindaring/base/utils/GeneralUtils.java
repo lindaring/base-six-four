@@ -3,6 +3,11 @@ package com.lindaring.base.utils;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.Date;
 
 @Slf4j
 public class GeneralUtils {
@@ -27,6 +32,21 @@ public class GeneralUtils {
 
   public static boolean stringEmpty(String compare) {
     return (compare == null || "".equals(compare.trim()));
+  }
+
+  public static Date getStartOfDay(LocalDateTime localDateTime) {
+    LocalDateTime startOfDay = localDateTime.with(LocalTime.MIN);
+    return Date.from(startOfDay.atZone(ZoneId.systemDefault()).toInstant());
+  }
+
+  public static Date getEndOfDay(LocalDateTime localDateTime) {
+    LocalDateTime endOfDay = localDateTime.with(LocalTime.MAX);
+    return Date.from(endOfDay.atZone(ZoneId.systemDefault()).toInstant());
+  }
+
+  public static String getFormattedDate(Date date, String format) {
+    SimpleDateFormat formattedDate = new SimpleDateFormat(format);
+    return formattedDate.format(date);
   }
 
 }

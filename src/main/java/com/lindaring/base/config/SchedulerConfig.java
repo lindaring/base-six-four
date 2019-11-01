@@ -1,6 +1,8 @@
 package com.lindaring.base.config;
 
 import com.lindaring.base.properties.MailProperties;
+import com.lindaring.base.service.UserService;
+import com.lindaring.base.utils.GeneralUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,9 @@ public class SchedulerConfig {
     @Autowired
     private MailProperties mailProperties;
 
+    @Autowired
+    private UserService userService;
+
     @Async
     @Scheduled(cron = "${api.mail.cron}")
     public void sendDailyVisitorsReport() throws MessagingException {
@@ -40,10 +45,14 @@ public class SchedulerConfig {
         helper.setTo(mailProperties.getTo());
         helper.setSubject(mailProperties.getSubject());
 
+        String date = GeneralUtils.getFormattedDate(new Date(), "EEEE dd MMMM yyyy");
+        int numberOfHits = userService.getTodayHitsCount();
+        int numberOfVisitors = userService.getTodayVisitorsCount();
+
         String body = mailProperties.getBody()
-                .replace("#TODAYS_DATE", new Date().toString())
-                .replace("#NUMBER_OF_USERS", 3+"")
-                .replace("#NUMBER_OF_HITS", 65+"");
+                .replace("#TODAYS_DATE", date)
+                .replace("#NUMBER_OF_USERS", numberOfHits+"")
+                .replace("#NUMBER_OF_HITS", numberOfVisitors+"");
         helper.setText(body, true);
 
         javaMailSender.send(msg);

@@ -13,7 +13,9 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -66,5 +68,29 @@ public class UserService {
             builder.append(geolocation.getLocation().getCapital());
         }
         return builder.toString();
+    }
+
+    private List<String> getTodayVisitors() {
+        LocalDateTime now = LocalDateTime.now();
+        Date startDate = GeneralUtils.getStartOfDay(now);
+        Date endDate = GeneralUtils.getEndOfDay(now);
+
+        return visitorsRepo.findDistinctIpByInsertDate(startDate, endDate);
+    }
+
+    public int getTodayVisitorsCount() {
+        return getTodayVisitors().size();
+    }
+
+    private List<Visitor> getTodayHits() {
+        LocalDateTime now = LocalDateTime.now();
+        Date startDate = GeneralUtils.getStartOfDay(now);
+        Date endDate = GeneralUtils.getEndOfDay(now);
+
+        return visitorsRepo.findByInsertDate(startDate, endDate);
+    }
+
+    public int getTodayHitsCount() {
+        return getTodayHits().size();
     }
 }
