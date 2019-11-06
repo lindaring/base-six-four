@@ -1,6 +1,6 @@
 package com.lindaring.base.entity;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +9,6 @@ import javax.persistence.*;
 import java.util.Date;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Builder
 @Data
 @Entity
@@ -24,4 +23,18 @@ public class Visitor {
     private String browser;
     private String url;
     private String location;
+
+    public Visitor(@JsonProperty("id") long id,
+                   @JsonProperty("ip") String ip,
+                   @JsonProperty("insertDate") Date insertDate,
+                   @JsonProperty("browser") String browser,
+                   @JsonProperty("url") String url,
+                   @JsonProperty("location") String location) {
+        this.id = id;
+        this.ip = ip;
+        this.insertDate = insertDate;
+        this.browser = browser;
+        this.url = url;
+        this.location = location;
+    }
 }

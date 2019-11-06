@@ -43,6 +43,11 @@ spring:
             trust: smtp.gmail.com
           starttls:
             enable: true
+  rabbitmq:
+    host: 134.209.195.231
+    queueName: stukzin.queue
+    exchangeName: stukzin-exchange
+    routingKey: stukzin.routingkey
 
 api:
   mail:

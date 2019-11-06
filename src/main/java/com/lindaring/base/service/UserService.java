@@ -28,6 +28,9 @@ public class UserService {
     @Autowired
     private GeolocationClientService geolocationClientService;
 
+    @Autowired
+    private AMQPProducerService amqpProducerService;
+
     @Async
     public void recordUser(HttpServletRequest httpRequest, User user) {
         try {
@@ -40,7 +43,8 @@ public class UserService {
             }
 
             Visitor visitor = new Visitor(0, ip, new Date(), userAgent, user.getUrl(), location);
-            visitorsRepo.save(visitor);
+            amqpProducerService.sendMessage(visitor);
+            //visitorsRepo.save(visitor);
         } catch (Exception e) {
             log.error("Could not record visitor.", e);
         }
