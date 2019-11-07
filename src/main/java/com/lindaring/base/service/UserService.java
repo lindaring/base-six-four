@@ -7,8 +7,7 @@ import com.lindaring.base.entity.Visitor;
 import com.lindaring.base.model.User;
 import com.lindaring.base.repo.VisitorsRepo;
 import com.lindaring.base.utils.GeneralUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -18,10 +17,9 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
+@Slf4j
 @Service
 public class UserService {
-
-    private static final Logger log = LoggerFactory.getLogger(Base64Service.class);
 
     @Autowired
     private VisitorsRepo visitorsRepo;
@@ -45,7 +43,6 @@ public class UserService {
 
             VisitorDto visitor = new VisitorDto(0, ip, new Date(), userAgent, user.getUrl(), location);
             rabbitMQService.sendMessage(visitor);
-            //visitorsRepo.save(visitor);
         } catch (Exception e) {
             log.error("Could not record visitor.", e);
         }
