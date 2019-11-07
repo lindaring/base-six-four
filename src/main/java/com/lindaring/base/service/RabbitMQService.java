@@ -14,7 +14,8 @@ public class RabbitMQService {
     private RabbitTemplate rabbitTemplate;
 
     @Autowired
-    RabbitMQProperties rabbitMQProperties;
+    private RabbitMQProperties rabbitMQProperties;
+
 
 
     @RabbitListener(queues="${spring.rabbitmq.queueName}")
