@@ -30,7 +30,7 @@ public class UserService {
     private GeolocationClientService geolocationClientService;
 
     @Autowired
-    private AMQPProducerService amqpProducerService;
+    private RabbitMQService rabbitMQService;
 
     @Async
     public void recordUser(HttpServletRequest httpRequest, User user) {
@@ -44,7 +44,7 @@ public class UserService {
             }
 
             VisitorDto visitor = new VisitorDto(0, ip, new Date(), userAgent, user.getUrl(), location);
-            amqpProducerService.sendMessage(visitor);
+            rabbitMQService.sendMessage(visitor);
             //visitorsRepo.save(visitor);
         } catch (Exception e) {
             log.error("Could not record visitor.", e);

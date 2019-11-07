@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 
 
 @Configuration
-public class AMQPConfig {
+public class RabbitMQConfig {
 
     @Autowired
     private RabbitMQProperties rabbitMQProperties;

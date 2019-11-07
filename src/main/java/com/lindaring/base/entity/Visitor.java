@@ -1,5 +1,6 @@
 package com.lindaring.base.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
 
+@AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
