@@ -61,7 +61,7 @@
             <version>18.0</version>
         </dependency>
 
-        <!-- MQ -->
+        <!-- Rabbit MQ -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-amqp</artifactId>

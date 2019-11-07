@@ -1,11 +1,13 @@
 package com.lindaring.base.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
 
 @NoArgsConstructor
@@ -23,18 +25,4 @@ public class Visitor {
     private String browser;
     private String url;
     private String location;
-
-    public Visitor(@JsonProperty("id") long id,
-                   @JsonProperty("ip") String ip,
-                   @JsonProperty("insertDate") Date insertDate,
-                   @JsonProperty("browser") String browser,
-                   @JsonProperty("url") String url,
-                   @JsonProperty("location") String location) {
-        this.id = id;
-        this.ip = ip;
-        this.insertDate = insertDate;
-        this.browser = browser;
-        this.url = url;
-        this.location = location;
-    }
 }

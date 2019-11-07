@@ -2,6 +2,7 @@ package com.lindaring.base.service;
 
 import com.lindaring.base.client.GeolocationClientService;
 import com.lindaring.base.client.model.Geolocation;
+import com.lindaring.base.dto.VisitorDto;
 import com.lindaring.base.entity.Visitor;
 import com.lindaring.base.model.User;
 import com.lindaring.base.repo.VisitorsRepo;
@@ -42,7 +43,7 @@ public class UserService {
                 location = getLocation(geoInfo);
             }
 
-            Visitor visitor = new Visitor(0, ip, new Date(), userAgent, user.getUrl(), location);
+            VisitorDto visitor = new VisitorDto(0, ip, new Date(), userAgent, user.getUrl(), location);
             amqpProducerService.sendMessage(visitor);
             //visitorsRepo.save(visitor);
         } catch (Exception e) {
