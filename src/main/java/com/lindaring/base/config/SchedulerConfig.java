@@ -68,7 +68,7 @@ public class SchedulerConfig {
     }
 
     @Async
-    @Scheduled(cron = "0 0/5 * * * ?")
+    @Scheduled(cron = "${spring.rabbitmq.cron.visitor}")
     public void writeVisitorQueueToDatabase() {
         if (!VisitorHelper.visitorsList.isEmpty()) {
             log.info("Writing visitor queue to database..." + VisitorHelper.visitorsList.size());
