@@ -1,14 +1,9 @@
 package com.lindaring.base.config;
 
-import com.lindaring.base.dto.VisitorDto;
-import com.lindaring.base.entity.Visitor;
 import com.lindaring.base.properties.MailProperties;
-import com.lindaring.base.repo.VisitorsRepo;
 import com.lindaring.base.service.UserService;
 import com.lindaring.base.utils.GeneralUtils;
-import com.lindaring.base.utils.VisitorHelper;
 import lombok.extern.slf4j.Slf4j;
-import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -19,9 +14,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Slf4j
 @Configuration
@@ -36,9 +29,6 @@ public class SchedulerConfig {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private VisitorsRepo visitorsRepo;
 
     @Async
     @Scheduled(cron = "${api.mail.cron}")
@@ -65,26 +55,6 @@ public class SchedulerConfig {
 
         javaMailSender.send(msg);
         log.info("Today's developer tools visitors report email was sent!");
-    }
-
-    @Async
-    @Scheduled(cron = "${spring.rabbitmq.cron.visitor}")
-    public void writeVisitorQueueToDatabase() {
-        if (!VisitorHelper.visitorsList.isEmpty()) {
-            log.info("Writing visitor queue to database..." + VisitorHelper.visitorsList.size());
-
-            DozerBeanMapper mapper = new DozerBeanMapper();
-            List<Visitor> entityList = new ArrayList<>();
-            for (VisitorDto dto : VisitorHelper.visitorsList) {
-                Visitor entity = mapper.map(dto, Visitor.class);
-                entityList.add(entity);
-            }
-
-            visitorsRepo.saveAll(entityList);
-            VisitorHelper.visitorsList.clear();
-        } else {
-            log.info("No visitors to write.");
-        }
     }
 
 }
