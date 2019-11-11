@@ -48,8 +48,6 @@ spring:
     queueName: stukzin.queue
     exchangeName: stukzin-exchange
     routingKey: stukzin.routingkey
-    cron:
-      visitor: "0 0/5 * * * ?"
 
 api:
   mail:
