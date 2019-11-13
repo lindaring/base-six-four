@@ -10,8 +10,7 @@ import com.lindaring.base.exception.ParamsException;
 import com.lindaring.base.model.CronJob;
 import com.lindaring.base.model.CronJobExpression;
 import com.lindaring.base.model.CronJobGenerated;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Locale;
@@ -19,10 +18,9 @@ import java.util.Locale;
 import static com.cronutils.model.CronType.QUARTZ;
 import static com.lindaring.base.utils.GeneralUtils.stringEmpty;
 
+@Slf4j
 @Service
 public class CronJobService {
-
-  private static final Logger log = LoggerFactory.getLogger(CronJobService.class);
 
   private static final String DEFAULT_CRON = "* * * * * ? *";
 

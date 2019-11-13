@@ -4,8 +4,7 @@ import com.lindaring.base.cache.Base64Cache;
 import com.lindaring.base.enumerator.Charset;
 import com.lindaring.base.model.Base64;
 import com.lindaring.base.properties.MessageProperties;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Base64Utils;
@@ -17,10 +16,9 @@ import java.util.List;
 
 import static java.lang.String.format;
 
+@Slf4j
 @Service
 public class Base64Service {
-
-    private static final Logger log = LoggerFactory.getLogger(Base64Service.class);
 
     @Autowired
     private Base64Cache cache;
