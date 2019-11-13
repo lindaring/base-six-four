@@ -1,15 +1,13 @@
 package com.lindaring.base.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 
+@Slf4j
 @Service
 public class GeneralService {
-
-    private static final Logger log = LoggerFactory.getLogger(GeneralService.class);
 
     /**
      * Get the current system year.
