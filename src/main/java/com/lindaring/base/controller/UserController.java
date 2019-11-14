@@ -1,7 +1,7 @@
 package com.lindaring.base.controller;
 
-import com.lindaring.base.model.GeneralResponse;
-import com.lindaring.base.model.User;
+import com.lindaring.base.dto.GeneralResponse;
+import com.lindaring.base.dto.User;
 import com.lindaring.base.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

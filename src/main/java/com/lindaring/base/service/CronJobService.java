@@ -5,11 +5,11 @@ import com.cronutils.model.Cron;
 import com.cronutils.model.definition.CronDefinition;
 import com.cronutils.model.definition.CronDefinitionBuilder;
 import com.cronutils.parser.CronParser;
+import com.lindaring.base.dto.CronJob;
+import com.lindaring.base.dto.CronJobExpression;
+import com.lindaring.base.dto.CronJobGenerated;
 import com.lindaring.base.enumerator.CronFrequency;
 import com.lindaring.base.exception.ParamsException;
-import com.lindaring.base.model.CronJob;
-import com.lindaring.base.model.CronJobExpression;
-import com.lindaring.base.model.CronJobGenerated;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

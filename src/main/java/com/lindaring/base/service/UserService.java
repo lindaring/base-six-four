@@ -2,9 +2,9 @@ package com.lindaring.base.service;
 
 import com.lindaring.base.client.GeolocationClientService;
 import com.lindaring.base.client.model.Geolocation;
+import com.lindaring.base.dto.User;
 import com.lindaring.base.dto.VisitorDto;
 import com.lindaring.base.entity.Visitor;
-import com.lindaring.base.model.User;
 import com.lindaring.base.repo.VisitorsRepo;
 import com.lindaring.base.utils.GeneralUtils;
 import lombok.extern.slf4j.Slf4j;

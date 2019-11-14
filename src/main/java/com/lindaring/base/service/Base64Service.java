@@ -1,8 +1,8 @@
 package com.lindaring.base.service;
 
 import com.lindaring.base.cache.Base64Cache;
+import com.lindaring.base.dto.Base64;
 import com.lindaring.base.enumerator.Charset;
-import com.lindaring.base.model.Base64;
 import com.lindaring.base.properties.MessageProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

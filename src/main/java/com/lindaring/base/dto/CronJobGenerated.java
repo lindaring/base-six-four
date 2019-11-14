@@ -1,4 +1,4 @@
-package com.lindaring.base.model;
+package com.lindaring.base.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
