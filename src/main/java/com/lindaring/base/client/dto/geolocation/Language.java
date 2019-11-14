@@ -1,4 +1,4 @@
-package com.lindaring.base.client.model;
+package com.lindaring.base.client.dto.geolocation;
 
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;

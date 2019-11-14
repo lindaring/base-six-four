@@ -1,6 +1,6 @@
 package com.lindaring.base.client;
 
-import com.lindaring.base.client.model.Geolocation;
+import com.lindaring.base.client.dto.geolocation.Geolocation;
 import com.lindaring.base.properties.GeolocationProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.openfeign.FeignClient;

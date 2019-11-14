@@ -1,7 +1,7 @@
 package com.lindaring.base.service;
 
 import com.lindaring.base.client.GeolocationClientService;
-import com.lindaring.base.client.model.Geolocation;
+import com.lindaring.base.client.dto.geolocation.Geolocation;
 import com.lindaring.base.dto.User;
 import com.lindaring.base.dto.VisitorDto;
 import com.lindaring.base.entity.Visitor;
