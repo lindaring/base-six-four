@@ -2,9 +2,11 @@ package com.lindaring.base.service;
 
 import com.lindaring.base.client.GeolocationClientService;
 import com.lindaring.base.client.dto.geolocation.Geolocation;
-import com.lindaring.base.dto.User;
+import com.lindaring.base.dto.UserDto;
 import com.lindaring.base.dto.VisitorDto;
+import com.lindaring.base.entity.Role;
 import com.lindaring.base.entity.Visitor;
+import com.lindaring.base.repo.RolesRepo;
 import com.lindaring.base.repo.VisitorsRepo;
 import com.lindaring.base.utils.GeneralUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -25,13 +27,21 @@ public class UserService {
     private VisitorsRepo visitorsRepo;
 
     @Autowired
+    private RolesRepo rolesRepo;
+
+    @Autowired
     private GeolocationClientService geolocationClientService;
 
     @Autowired
     private RabbitMQService rabbitMQService;
 
+    public void test() {
+        Iterable<Role> users = rolesRepo.findAll();
+        users.forEach(x -> log.info("users: " + x));
+    }
+
     @Async
-    public void recordUser(HttpServletRequest httpRequest, User user) {
+    public void recordUser(HttpServletRequest httpRequest, UserDto userDto) {
         try {
             String ip = GeneralUtils.getClientIp(httpRequest);
             String userAgent = GeneralUtils.getUserAgent(httpRequest);
@@ -41,7 +51,7 @@ public class UserService {
                 location = getLocation(geoInfo);
             }
 
-            VisitorDto visitor = new VisitorDto(0, ip, new Date(), userAgent, user.getUrl(), location);
+            VisitorDto visitor = new VisitorDto(0, ip, new Date(), userAgent, userDto.getUrl(), location);
             rabbitMQService.sendMessage(visitor);
         } catch (Exception e) {
             log.error("Could not record visitor.", e);

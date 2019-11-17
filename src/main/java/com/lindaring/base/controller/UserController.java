@@ -1,7 +1,8 @@
 package com.lindaring.base.controller;
 
 import com.lindaring.base.dto.GeneralResponse;
-import com.lindaring.base.dto.User;
+import com.lindaring.base.dto.RegisteredUser;
+import com.lindaring.base.dto.UserDto;
 import com.lindaring.base.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,15 @@ public class UserController {
     @PostMapping(value="/")
     @ApiOperation(notes = "Record user", value = "Record user")
     public ResponseEntity<GeneralResponse> recordUser(HttpServletRequest httpRequest,
-                                                      @RequestBody User user) {
-        userService.recordUser(httpRequest, user);
+                                                      @RequestBody UserDto userDto) {
+        userService.recordUser(httpRequest, userDto);
+        return new ResponseEntity<>(new GeneralResponse(true), HttpStatus.CREATED);
+    }
+
+    @PostMapping(value="/register")
+    @ApiOperation(notes = "Register user", value = "Register user")
+    public ResponseEntity<GeneralResponse> registerUser(@RequestBody RegisteredUser user) {
+        userService.test();
         return new ResponseEntity<>(new GeneralResponse(true), HttpStatus.CREATED);
     }
 
