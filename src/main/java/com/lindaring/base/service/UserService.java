@@ -4,9 +4,9 @@ import com.lindaring.base.client.GeolocationClientService;
 import com.lindaring.base.client.dto.geolocation.Geolocation;
 import com.lindaring.base.dto.UserDto;
 import com.lindaring.base.dto.VisitorDto;
-import com.lindaring.base.entity.Role;
+import com.lindaring.base.entity.User;
 import com.lindaring.base.entity.Visitor;
-import com.lindaring.base.repo.RolesRepo;
+import com.lindaring.base.repo.UsersRepo;
 import com.lindaring.base.repo.VisitorsRepo;
 import com.lindaring.base.utils.GeneralUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +27,7 @@ public class UserService {
     private VisitorsRepo visitorsRepo;
 
     @Autowired
-    private RolesRepo rolesRepo;
+    private UsersRepo usersRepo;
 
     @Autowired
     private GeolocationClientService geolocationClientService;
@@ -36,8 +36,10 @@ public class UserService {
     private RabbitMQService rabbitMQService;
 
     public void test() {
-        Iterable<Role> users = rolesRepo.findAll();
-        users.forEach(x -> log.info("users: " + x));
+        Iterable<User> users = usersRepo.findAll();
+        users.forEach(x -> {
+            log.info("users: " + x);
+        });
     }
 
     @Async

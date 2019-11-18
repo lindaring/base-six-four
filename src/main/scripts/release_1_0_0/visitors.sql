@@ -43,3 +43,5 @@ select * from roles;
 select * from user_roles;
 
 insert into users values (null, 'linda@try.com', '123', 1);
+insert into users values (null, 'sk@try.com', '123', 1);
+insert into user_roles values (null, 1, 2), (null, 1, 1), (null, 2, 1);
