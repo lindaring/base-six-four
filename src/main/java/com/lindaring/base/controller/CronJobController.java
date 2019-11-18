@@ -3,7 +3,7 @@ package com.lindaring.base.controller;
 import com.lindaring.base.dto.CronJob;
 import com.lindaring.base.dto.CronJobExpression;
 import com.lindaring.base.dto.CronJobGenerated;
-import com.lindaring.base.enumerator.CronFrequency;
+import com.lindaring.base.enums.CronFrequency;
 import com.lindaring.base.exception.ParamsException;
 import com.lindaring.base.service.CronJobService;
 import io.swagger.annotations.ApiOperation;

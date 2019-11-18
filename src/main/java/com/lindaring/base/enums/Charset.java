@@ -1,4 +1,4 @@
-package com.lindaring.base.enumerator;
+package com.lindaring.base.enums;
 
 import java.util.ArrayList;
 import java.util.Arrays;

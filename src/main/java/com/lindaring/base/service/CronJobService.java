@@ -8,7 +8,7 @@ import com.cronutils.parser.CronParser;
 import com.lindaring.base.dto.CronJob;
 import com.lindaring.base.dto.CronJobExpression;
 import com.lindaring.base.dto.CronJobGenerated;
-import com.lindaring.base.enumerator.CronFrequency;
+import com.lindaring.base.enums.CronFrequency;
 import com.lindaring.base.exception.ParamsException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
 package com.lindaring.base.controller;
 
 import com.lindaring.base.dto.Base64;
-import com.lindaring.base.enumerator.Charset;
+import com.lindaring.base.enums.Charset;
 import com.lindaring.base.service.Base64Service;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

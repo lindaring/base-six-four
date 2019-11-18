@@ -17,4 +17,11 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     return new ResponseEntity<>(apiException, HttpStatus.BAD_REQUEST);
   }
 
+  @ExceptionHandler(TechnicalException.class)
+  public ResponseEntity<BusinessRuleException> handleMethodUnexpectedErrors(ParamsException e, WebRequest request) {
+    HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+    BusinessRuleException apiException = new BusinessRuleException(e.getMessage(), status, status.value(), e.getClass().toString());
+    return new ResponseEntity<>(apiException, HttpStatus.BAD_REQUEST);
+  }
+
 }

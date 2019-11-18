@@ -1,6 +1,7 @@
 package com.lindaring.base.utils;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
@@ -49,4 +50,8 @@ public class GeneralUtils {
     return formattedDate.format(date);
   }
 
+  public static String encryptPassword(String password) {
+    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(5);
+    return passwordEncoder.encode(password);
+  }
 }
