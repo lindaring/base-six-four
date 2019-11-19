@@ -59,3 +59,10 @@ api:
   geolocation:
     key: 4b0842278fdc1afebd2f1f27d309a8b9
     url: http://api.ipstack.com/
+
+security:
+  jwt:
+    secret: "Evd+utKk@*YWez5-([6.9hx"
+    tokenPrefix: "Bearer "
+    headerString: "Authorization "
+    expirationTime: 86400000

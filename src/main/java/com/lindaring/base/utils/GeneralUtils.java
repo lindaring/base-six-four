@@ -50,8 +50,12 @@ public class GeneralUtils {
     return formattedDate.format(date);
   }
 
+  public static BCryptPasswordEncoder getPasswordEncoder() {
+    return new BCryptPasswordEncoder(5);
+  }
+
   public static String encryptPassword(String password) {
-    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(5);
+    BCryptPasswordEncoder passwordEncoder = getPasswordEncoder();
     return passwordEncoder.encode(password);
   }
 }
