@@ -45,3 +45,9 @@ select * from user_roles;
 insert into users values (null, 'linda@try.com', '123', 1);
 insert into users values (null, 'sk@try.com', '123', 1);
 insert into user_roles values (null, 1, 2), (null, 1, 1), (null, 2, 1);
+
+update users set password = '$2y$05$p3yQ7ijJOwQoPhDUcYLhm.h9426rKdUdAxd69MsloFAac.1fEVNBi' where username = 'sk@ike.com';
+update users set active = 1 where username = 'sk@ike.com';
+
+update roles set role = 'ADMIN' where role = 'ROLE_ADMIN';
+update roles set role = 'USER' where role = 'ROLE_USER';

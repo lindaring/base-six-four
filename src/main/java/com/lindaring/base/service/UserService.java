@@ -5,9 +5,9 @@ import com.lindaring.base.client.dto.geolocation.Geolocation;
 import com.lindaring.base.dto.RegisteredUser;
 import com.lindaring.base.dto.UserDto;
 import com.lindaring.base.dto.VisitorDto;
-import com.lindaring.base.entity.Role;
-import com.lindaring.base.entity.User;
-import com.lindaring.base.entity.Visitor;
+import com.lindaring.base.entity.RoleEntity;
+import com.lindaring.base.entity.UserEntity;
+import com.lindaring.base.entity.VisitorEntity;
 import com.lindaring.base.exception.ParamsException;
 import com.lindaring.base.exception.TechnicalException;
 import com.lindaring.base.repo.RolesRepo;
@@ -63,7 +63,7 @@ public class UserService {
 
         //Register user
         try {
-            User newUser = new User();
+            UserEntity newUser = new UserEntity();
             newUser.setUsername(user.getUsername());
             newUser.setPassword(GeneralUtils.encryptPassword(user.getPassword()));
             newUser.setActive(0);
@@ -75,15 +75,15 @@ public class UserService {
         }
     }
 
-    private List<Role> getUserRoles(RegisteredUser user) throws ParamsException {
-        List<Role> roles = new ArrayList<>();
+    private List<RoleEntity> getUserRoles(RegisteredUser user) throws ParamsException {
+        List<RoleEntity> roles = new ArrayList<>();
 
-        Iterable<Role> dbRoles = rolesRepo.findAll();
+        Iterable<RoleEntity> dbRoles = rolesRepo.findAll();
         user.getRoles().forEach(roleType ->
                 StreamSupport.stream(dbRoles.spliterator(), false)
                         .filter(dbRole -> dbRole.getDesc().equals(roleType.getFullDescription()))
                         .findFirst()
-                        .map(dbRole -> roles.add(new Role(dbRole.getId(), dbRole.getDesc(), null)))
+                        .map(dbRole -> roles.add(new RoleEntity(dbRole.getId(), dbRole.getDesc(), null)))
         );
 
         if (roles.isEmpty()) {
@@ -94,7 +94,7 @@ public class UserService {
     }
 
     private void checkUserExists(String username) throws ParamsException {
-        Optional<User> user = usersRepo.getUserByUsername(username);
+        Optional<UserEntity> user = usersRepo.getUserByUsername(username);
         if (user.isPresent()) {
             throw new ParamsException("Account already exists.");
         }
@@ -154,7 +154,7 @@ public class UserService {
         return getTodayVisitors().size();
     }
 
-    private List<Visitor> getTodayHits() {
+    private List<VisitorEntity> getTodayHits() {
         LocalDateTime now = LocalDateTime.now();
         Date startDate = GeneralUtils.getStartOfDay(now);
         Date endDate = GeneralUtils.getEndOfDay(now);

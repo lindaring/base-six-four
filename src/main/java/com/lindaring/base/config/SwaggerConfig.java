@@ -29,7 +29,8 @@ public class SwaggerConfig {
                 regex("/base-six-four/v1/general.*"),
                 regex("/base-six-four/v1/user.*"),
                 regex("/base-six-four/v1/cronjob.*"),
-                regex("/base-six-four/v1/url.*")
+                regex("/base-six-four/v1/url.*"),
+                regex("/base-six-four/secure/v1/dashboard.*")
         );
     }
 

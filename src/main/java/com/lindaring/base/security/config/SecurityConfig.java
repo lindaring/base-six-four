@@ -28,14 +28,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         String[] permittedUrls = {
                 "/login",
-                "/base-six-four/v1/base64/**"
+                "/base-six-four/v1/base64/**",
+                "/base-six-four/v1/cache/**",
+                "/base-six-four/v1/cronjob/**",
+                "/base-six-four/v1/year/**",
+                "/base-six-four/v1/url/**"
         };
 
         http.cors().and().csrf().disable()
             .authorizeRequests()
-            .antMatchers(HttpMethod.POST, permittedUrls).permitAll()
-            .antMatchers("/base-six-four/v1/general/**").hasRole("USER")
-            .antMatchers("/*/floor2/**").hasRole("ADMIN")
+            .antMatchers(permittedUrls).permitAll()
+            .antMatchers("/base-six-four/secure/v1/**").hasAnyRole("USER", "ADMIN")
             .and()
             .addFilter(new JWTAuthenticationFilter(authenticationManager(), securityProperties))
             .addFilter(new JWTAuthorizationFilter(authenticationManager(), customUserDetailsService, securityProperties));

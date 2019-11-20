@@ -13,5 +13,6 @@ import java.util.List;
 public class RegisteredUser {
     private String username;
     private String password;
+    private boolean activated;
     private List<RoleType> roles;
 }
