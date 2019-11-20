@@ -1,4 +1,4 @@
-package com.lindaring.base.service;
+package com.lindaring.base.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lindaring.base.dto.RegisteredUser;

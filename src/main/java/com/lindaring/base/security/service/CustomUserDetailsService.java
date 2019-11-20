@@ -1,4 +1,4 @@
-package com.lindaring.base.service;
+package com.lindaring.base.security.service;
 
 import com.lindaring.base.dto.RegisteredUser;
 import org.springframework.security.core.authority.AuthorityUtils;

@@ -1,7 +1,8 @@
-package com.lindaring.base.service;
+package com.lindaring.base.security.filter;
 
 import com.lindaring.base.dto.RegisteredUser;
 import com.lindaring.base.properties.SecurityProperties;
+import com.lindaring.base.security.service.CustomUserDetailsService;
 import io.jsonwebtoken.Jwts;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

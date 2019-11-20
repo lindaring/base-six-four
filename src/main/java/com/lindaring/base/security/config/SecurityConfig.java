@@ -1,9 +1,9 @@
-package com.lindaring.base.config;
+package com.lindaring.base.security.config;
 
 import com.lindaring.base.properties.SecurityProperties;
-import com.lindaring.base.service.CustomUserDetailsService;
-import com.lindaring.base.service.JWTAuthenticationFilter;
-import com.lindaring.base.service.JWTAuthorizationFilter;
+import com.lindaring.base.security.service.CustomUserDetailsService;
+import com.lindaring.base.security.filter.JWTAuthenticationFilter;
+import com.lindaring.base.security.filter.JWTAuthorizationFilter;
 import com.lindaring.base.utils.GeneralUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
