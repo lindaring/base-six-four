@@ -1,21 +1,6 @@
-logging:
-  level:
-    org:
-      springframework:
-        web: debug
-      hibernate: error
-    com:
-      lindaring:
-        base: debug
-
-custom:
-  messages:
-    invalidString: Invalid string entered. Cannot convert null and empty strings.
-
-caching:
-  base64: BASE_64_CACHE
-
 spring:
+  profiles:
+    active: local
   jpa:
     show-sql: true
     hibernate:
@@ -49,6 +34,23 @@ spring:
     exchangeName: stukzin-exchange
     routingKey: stukzin.routingkey
 
+logging:
+  level:
+    org:
+      springframework:
+        web: debug
+      hibernate: error
+    com:
+      lindaring:
+        base: debug
+
+custom:
+  messages:
+    invalidString: Invalid string entered. Cannot convert null and empty strings.
+
+caching:
+  base64: BASE_64_CACHE
+
 api:
   mail:
     enabled: true
@@ -66,3 +68,13 @@ security:
     tokenPrefix: "Bearer "
     headerString: "Authorization "
     expirationTime: 86400000
+
+---
+spring:
+  profiles: live
+
+---
+spring:
+  profiles: local
+  datasource:
+    url: jdbc:mysql://localhost:3306/db_base_six_four?useSSL=false&serverTimezone=CAT
