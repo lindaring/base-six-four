@@ -1,17 +1,19 @@
 spring:
   profiles:
     active: local
+  application:
+    name: "base-six-four-api"
   jpa:
     show-sql: true
     hibernate:
       naming:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    database-platform: org.hibernate.dialect.MySQLDialect
   datasource:
-    url: jdbc:mysql://178.128.255.183:80/db_base_six_four?useSSL=false&serverTimezone=CAT
     username: root
     password: 211021555
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       connection-timeout: 3000
       maximum-pool-size: 5
@@ -72,9 +74,11 @@ security:
 ---
 spring:
   profiles: live
+  datasource:
+    url: jdbc:mysql://178.128.255.183:80/db_base_six_four?useSSL=false&serverTimezone=CAT&allowPublicKeyRetrieval=true
 
 ---
 spring:
   profiles: local
   datasource:
-    url: jdbc:mysql://localhost:3306/db_base_six_four?useSSL=false&serverTimezone=CAT
+    url: jdbc:mysql://localhost:3306/db_base_six_four?useSSL=false&serverTimezone=CAT&allowPublicKeyRetrieval=true

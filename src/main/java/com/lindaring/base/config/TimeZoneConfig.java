@@ -14,7 +14,7 @@ public class TimeZoneConfig {
     @PostConstruct
     public void init() {
         TimeZone.setDefault(TimeZone.getTimeZone("Africa/Johannesburg"));
-        log.info("Date in UTC: " + new Date().toString());
+        log.info("Date in Africa/Johannesburg: " + new Date().toString());
     }
 
 }
