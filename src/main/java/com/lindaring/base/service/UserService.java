@@ -50,7 +50,13 @@ public class UserService {
     private RabbitMQService rabbitMQService;
 
     public void registerUser(RegisteredUser user) throws TechnicalException, ParamsException {
-        //Validation params
+        validateRegisterUserParams(user);
+        checkUserExists(user.getUsername());
+        persistUserInfo(user);
+        sendRegistrationConfirmationEmail();
+    }
+
+    private void validateRegisterUserParams(RegisteredUser user) throws ParamsException {
         if (StringUtils.isEmpty(user.getUsername()) || !EmailValidator.getInstance().isValid(user.getUsername())) {
             throw new ParamsException("Enter a valid email address.");
         } else if (StringUtils.isEmpty(user.getPassword())) {
@@ -58,10 +64,16 @@ public class UserService {
         } else if (ObjectUtils.isEmpty(user.getRoles())) {
             throw new ParamsException("Select at least 1 role.");
         }
+    }
 
-        checkUserExists(user.getUsername());
+    private void checkUserExists(String username) throws ParamsException {
+        Optional<UserEntity> user = usersRepo.getUserByUsername(username);
+        if (user.isPresent()) {
+            throw new ParamsException("Account already exists.");
+        }
+    }
 
-        //Register user
+    private void persistUserInfo(RegisteredUser user) throws TechnicalException {
         try {
             UserEntity newUser = new UserEntity();
             newUser.setUsername(user.getUsername());
@@ -73,6 +85,10 @@ public class UserService {
             log.error("Could not register user.", e);
             throw new TechnicalException("Could not register user.", e);
         }
+    }
+
+    private void sendRegistrationConfirmationEmail() {
+
     }
 
     private List<RoleEntity> getUserRoles(RegisteredUser user) throws ParamsException {
@@ -91,13 +107,6 @@ public class UserService {
         }
 
         return roles;
-    }
-
-    private void checkUserExists(String username) throws ParamsException {
-        Optional<UserEntity> user = usersRepo.getUserByUsername(username);
-        if (user.isPresent()) {
-            throw new ParamsException("Account already exists.");
-        }
     }
 
     @Async
