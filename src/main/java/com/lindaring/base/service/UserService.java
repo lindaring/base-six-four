@@ -145,6 +145,24 @@ public class UserService {
         }
     }
 
+    @Async
+    public void recordVisit(HttpServletRequest httpRequest, UserDto userDto) {
+        try {
+            String ip = GeneralUtils.getClientIp(httpRequest);
+            String userAgent = GeneralUtils.getUserAgent(httpRequest);
+            String location = null;
+            if (ip != null) {
+                Geolocation geoInfo = geolocationClientService.getLocation(ip);
+                location = getLocation(geoInfo);
+            }
+
+            VisitorDto visitor = new VisitorDto(0, ip, new Date(), userAgent, userDto.getUrl(), location);
+            rabbitMQService.sendMessage(visitor);
+        } catch (Exception e) {
+            log.error("Could not record visitor.", e);
+        }
+    }
+
     private List<RoleEntity> getUserRoles(RegisteredUser user) throws ParamsException {
         List<RoleEntity> roles = new ArrayList<>();
 
@@ -168,24 +186,6 @@ public class UserService {
         }
 
         return roles;
-    }
-
-    @Async
-    public void recordUser(HttpServletRequest httpRequest, UserDto userDto) {
-        try {
-            String ip = GeneralUtils.getClientIp(httpRequest);
-            String userAgent = GeneralUtils.getUserAgent(httpRequest);
-            String location = null;
-            if (ip != null) {
-                Geolocation geoInfo = geolocationClientService.getLocation(ip);
-                location = getLocation(geoInfo);
-            }
-
-            VisitorDto visitor = new VisitorDto(0, ip, new Date(), userAgent, userDto.getUrl(), location);
-            rabbitMQService.sendMessage(visitor);
-        } catch (Exception e) {
-            log.error("Could not record visitor.", e);
-        }
     }
 
     private String getLocation(Geolocation geolocation) {

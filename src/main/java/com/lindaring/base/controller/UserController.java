@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,10 +27,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping(value="/")
-    @ApiOperation(notes = "Record user", value = "Record user")
-    public ResponseEntity<GeneralResponse> recordUser(HttpServletRequest httpRequest, @RequestBody UserDto userDto) {
-        userService.recordUser(httpRequest, userDto);
+    @PostMapping(value="/visit")
+    @ApiOperation(notes = "Record a page visit", value = "Record a page visit")
+    public ResponseEntity<GeneralResponse> recordHit(HttpServletRequest httpRequest, @RequestBody UserDto userDto) {
+        userService.recordVisit(httpRequest, userDto);
         return new ResponseEntity<>(new GeneralResponse(true), HttpStatus.CREATED);
     }
 
@@ -37,6 +38,13 @@ public class UserController {
     @ApiOperation(notes = "Register user", value = "Register user")
     public ResponseEntity<GeneralResponse> registerUser(@RequestBody RegisteredUser user) throws TechnicalException, ParamsException {
         userService.registerUser(user);
+        return new ResponseEntity<>(new GeneralResponse(true), HttpStatus.CREATED);
+    }
+
+    @PutMapping(value="/activate")
+    @ApiOperation(notes = "Activate registration", value = "Activate registration")
+    public ResponseEntity<GeneralResponse> activateUser(@RequestBody RegisteredUser user) throws TechnicalException, ParamsException {
+        //Todo - add implementation
         return new ResponseEntity<>(new GeneralResponse(true), HttpStatus.CREATED);
     }
 
