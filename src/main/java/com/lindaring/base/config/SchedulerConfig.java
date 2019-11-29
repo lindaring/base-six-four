@@ -31,23 +31,23 @@ public class SchedulerConfig {
     private UserService userService;
 
     @Async
-    @Scheduled(cron = "${api.mail.cron}")
+    @Scheduled(cron = "${api.mail.hit.cron}")
     public void sendDailyVisitorsReport() throws MessagingException {
-        if (!mailProperties.isEnabled()) {
+        if (!mailProperties.getHit().isEnabled()) {
             log.info("Developer tools visitors report email is disabled!");
             return;
         }
         MimeMessage msg = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(msg, true);
 
-        helper.setTo(mailProperties.getTo());
-        helper.setSubject(mailProperties.getSubject());
+        helper.setTo(mailProperties.getHit().getTo());
+        helper.setSubject(mailProperties.getHit().getSubject());
 
         String date = GeneralUtils.getFormattedDate(new Date(), "EEEE dd MMMM yyyy");
         int numberOfHits = userService.getTodayHitsCount();
         int numberOfVisitors = userService.getTodayVisitorsCount();
 
-        String body = mailProperties.getBody()
+        String body = mailProperties.getHit().getBody()
                 .replace("#TODAYS_DATE", date)
                 .replace("#NUMBER_OF_USERS", numberOfHits+"")
                 .replace("#NUMBER_OF_HITS", numberOfVisitors+"");

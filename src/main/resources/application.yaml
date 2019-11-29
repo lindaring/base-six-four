@@ -11,6 +11,7 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     database-platform: org.hibernate.dialect.MySQLDialect
   datasource:
+    url: jdbc:mysql://178.128.255.183:80/db_base_six_four?useSSL=false&serverTimezone=CAT&allowPublicKeyRetrieval=true
     username: root
     password: 211021555
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -55,11 +56,17 @@ caching:
 
 api:
   mail:
-    enabled: true
-    cron: "0 59 23 1/1 * ?"
-    to: "lndsimelane@gmail.com"
-    subject: "Developer Tools Visitors Report"
-    body: "<html><head><style>body{font-family:'proxima-nova','proximanova','helveticaneue','helvetica','arial',sans-serif;margin:0;padding:0;}div#header{background:#ffc107;}div#header>img{max-width:35px;float:left;margin:5px;}div#header>h1{float:left;margin:5px;padding:0;color:#fff;}.clear{clear:both;}div#content{padding:010px;}</style></head><body><div id='header'><img src='http://lindaring.com/logo.png'/><h1>DeveloperTools</h1><div class='clear'></div></div><div id='content'><h1>Users for Today</h1><h3>#TODAYS_DATE</h3><p><strong>Visitors:</strong> #NUMBER_OF_USERS<br/><strong>Hits:</strong> #NUMBER_OF_HITS</p><p>Regards,<br/><br/>DeveloperTools</p></div></body></html>"
+    hit:
+      enabled: true
+      cron: "0 59 23 1/1 * ?"
+      to: "lndsimelane@gmail.com"
+      subject: "Lindaring Tools Visitors Report"
+      body: "<html><head><style>body{font-family:'proxima-nova','proximanova','helveticaneue','helvetica','arial',sans-serif;margin:0;padding:0;}div#header{background:#ffc107;}div#header>img{max-width:35px;float:left;margin:5px;}div#header>h1{float:left;margin:5px;padding:0;color:#fff;}.clear{clear:both;}div#content{padding:010px;}</style></head><body><div id='header'><img src='http://lindaring.com/logo.png'/><h1>Lindaring Tools</h1><div class='clear'></div></div><div id='content'><h1>Users for Today</h1><h3>#TODAYS_DATE</h3><p><strong>Visitors:</strong> #NUMBER_OF_USERS<br/><strong>Hits:</strong> #NUMBER_OF_HITS</p><p>Regards,<br/><br/>Lindaring Tools Team</p></div></body></html>"
+    register:
+      enabled: true
+      link: "http://lindaring.com/activate?code=#ACTIVATION_CODE"
+      subject: "Lindaring Tools Confirmation"
+      body: "<html><head><style>body{font-family:'proxima-nova','proximanova','helveticaneue','helvetica','arial',sans-serif;margin:0;padding:0;}div#header{background:#ffc107;}div#header>img{max-width:35px;float:left;margin:5px;}div#header>h1{float:left;margin:5px;padding:0;color:#fff;}.clear{clear:both;}div#content{padding:010px;}</style></head><body><div id='header'><img src='http://lindaring.com/logo.png'/><h1>Lindaring Tools</h1><div class='clear'></div></div><div id='content'><h1>Confirm Email Address</h1><p>Humble greeting,<br/><br/>Click on the below link to confirm the validity of your email address:<br/><a href='#ACTIVATION_LINK'>#ACTIVATION_LINK</a></p><p>Regards,<br/><br/>Lindaring Tools Team</p></div></body></html>"
   geolocation:
     key: 4b0842278fdc1afebd2f1f27d309a8b9
     url: http://api.ipstack.com/
@@ -74,11 +81,12 @@ security:
 ---
 spring:
   profiles: live
-  datasource:
-    url: jdbc:mysql://178.128.255.183:80/db_base_six_four?useSSL=false&serverTimezone=CAT&allowPublicKeyRetrieval=true
 
 ---
 spring:
   profiles: local
   datasource:
     url: jdbc:mysql://localhost:3306/db_base_six_four?useSSL=false&serverTimezone=CAT&allowPublicKeyRetrieval=true
+  mail:
+    host: 127.0.0.1
+    port: 25

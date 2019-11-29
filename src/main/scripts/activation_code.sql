@@ -16,6 +16,9 @@ CREATE TABLE activate_code
   FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
+ALTER TABLE activate_code
+  ADD COLUMN insertDate datetime;
+
 /* Selects */
 select *
 from activate_code;

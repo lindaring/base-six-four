@@ -14,8 +14,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
@@ -35,6 +37,8 @@ public class UserEntity {
 
     private int active;
 
+    private Date insertDate;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(
         name = "user_roles",
@@ -42,4 +46,7 @@ public class UserEntity {
         inverseJoinColumns = { @JoinColumn(name = "role_id")
     })
     private List<RoleEntity> roles = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<ActivationCodeEntity> activationCodes = new ArrayList<>();
 }
