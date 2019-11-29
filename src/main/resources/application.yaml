@@ -106,3 +106,4 @@ api:
       enabled: false
     approval:
       link: "http://localhost:4200/approval?code=#APPROVAL_CODE"
+      enabled: false
