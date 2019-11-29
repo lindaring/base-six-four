@@ -104,3 +104,5 @@ api:
     register:
       link: "http://localhost:4200/activate?code=#ACTIVATION_CODE"
       enabled: false
+    approval:
+      link: "http://localhost:4200/approval?code=#APPROVAL_CODE"
