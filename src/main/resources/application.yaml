@@ -90,3 +90,11 @@ spring:
   mail:
     host: 127.0.0.1
     port: 25
+
+api:
+  mail:
+    hit:
+      enabled: false
+    register:
+      link: "http://localhost:4200/activate?code=#ACTIVATION_CODE"
+      enabled: false

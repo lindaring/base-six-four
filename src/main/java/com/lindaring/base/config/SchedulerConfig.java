@@ -34,7 +34,7 @@ public class SchedulerConfig {
     @Scheduled(cron = "${api.mail.hit.cron}")
     public void sendDailyVisitorsReport() throws MessagingException {
         if (!mailProperties.getHit().isEnabled()) {
-            log.info("Developer tools visitors report email is disabled!");
+            log.info("Visitors report email is disabled!");
             return;
         }
         MimeMessage msg = javaMailSender.createMimeMessage();

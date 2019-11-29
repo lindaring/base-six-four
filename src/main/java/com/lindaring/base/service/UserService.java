@@ -120,6 +120,10 @@ public class UserService {
     }
 
     private void sendRegistrationConfirmationEmail(String destinationEmail, String activationCode) throws TechnicalException {
+        if (!mailProperties.getRegister().isEnabled()) {
+            log.info("Confirmation email is disabled!");
+            return;
+        }
         try {
             MimeMessage msg = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(msg, true);
