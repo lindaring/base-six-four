@@ -1,14 +1,13 @@
 package com.lindaring.base.security.config;
 
 import com.lindaring.base.properties.SecurityProperties;
-import com.lindaring.base.security.service.CustomUserDetailsService;
 import com.lindaring.base.security.filter.JWTAuthenticationFilter;
 import com.lindaring.base.security.filter.JWTAuthorizationFilter;
+import com.lindaring.base.security.service.CustomUserDetailsService;
 import com.lindaring.base.utils.GeneralUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;

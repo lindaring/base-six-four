@@ -17,6 +17,7 @@ CREATE TABLE user_roles
   FOREIGN KEY (role_id) REFERENCES roles (id)
 );
 
+/* Inserts */
 insert into user_roles
 values (null, 1, 2),
        (null, 1, 1),

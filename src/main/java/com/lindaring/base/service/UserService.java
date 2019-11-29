@@ -149,7 +149,14 @@ public class UserService {
                 StreamSupport.stream(dbRoles.spliterator(), false)
                         .filter(dbRole -> dbRole.getDesc().equals(roleType.getFullDescription()))
                         .findFirst()
-                        .map(dbRole -> roles.add(new RoleEntity(dbRole.getId(), dbRole.getDesc(), null)))
+                        .map(dbRole -> {
+                            RoleEntity roleEntity = new RoleEntity();
+                            roleEntity.setId(dbRole.getId());
+                            roleEntity.setDesc(dbRole.getDesc());
+                            roleEntity.setInsertDate(new Date());
+                            roles.add(roleEntity);
+                            return null;
+                        })
         );
 
         if (roles.isEmpty()) {

@@ -14,6 +14,9 @@ CREATE TABLE roles
   role varchar(50) UNIQUE
 );
 
+ALTER TABLE roles
+  ADD COLUMN insertDate datetime;
+  
 /* Inserts */
 INSERT INTO roles (role)
 VALUES ('ROLE_USER'),
