@@ -19,6 +19,9 @@ CREATE TABLE activate_code
 ALTER TABLE activate_code
   ADD COLUMN insertDate datetime;
 
+ALTER TABLE activate_code
+  ADD COLUMN approve varchar(50) UNIQUE;
+
 /* Selects */
 select *
 from activate_code;

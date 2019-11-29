@@ -2,6 +2,7 @@ package com.lindaring.base.service;
 
 import com.lindaring.base.client.GeolocationClientService;
 import com.lindaring.base.client.dto.geolocation.Geolocation;
+import com.lindaring.base.dto.ActivationRequest;
 import com.lindaring.base.dto.RegisteredUser;
 import com.lindaring.base.dto.UserDto;
 import com.lindaring.base.dto.VisitorDto;
@@ -18,6 +19,7 @@ import com.lindaring.base.repo.UsersRepo;
 import com.lindaring.base.repo.VisitorsRepo;
 import com.lindaring.base.utils.GeneralUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.time.DateUtils;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -109,7 +111,7 @@ public class UserService {
     private ActivationCodeEntity generateActivationCode(UserEntity newUser) throws TechnicalException {
         try {
             ActivationCodeEntity code = new ActivationCodeEntity();
-            code.setCode(UUID.randomUUID().toString());
+            code.setCode(UUID.randomUUID().toString().toUpperCase());
             code.setInsertDate(new Date());
             code.setUser(newUser);
             return activationCodesRepo.save(code);
@@ -141,6 +143,80 @@ public class UserService {
             javaMailSender.send(msg);
         } catch (MessagingException e) {
             log.error("Could send registration confirmation email.", e);
+            throw new TechnicalException("Could not register user.", e);
+        }
+    }
+
+    public void activateRegistration(ActivationRequest activationCode) throws TechnicalException, ParamsException {
+        try {
+            ActivationCodeEntity code = getActivationCode(activationCode);
+            UserEntity user = code.getUser();
+            checkAccountActive(user);
+            checkActivationExpired(code);
+            activateAccount(user);
+            String approvalCode = generateApprovalCode(code);
+            sendRegistrationApprovalEmail(approvalCode);
+        } catch (ParamsException e) {
+            throw e;
+        } catch (Exception e) {
+            log.error("Could not activate registration.", e);
+            throw new TechnicalException("Could not activate registration.", e);
+        }
+    }
+
+    private ActivationCodeEntity getActivationCode(ActivationRequest activationCode) throws TechnicalException {
+        Optional<ActivationCodeEntity> codeOptional = activationCodesRepo.getActivationCodeByCode(activationCode.getCode());
+        return codeOptional.orElseThrow(() -> new TechnicalException("Failed to activate registration."));
+    }
+
+    private void checkAccountActive(UserEntity user) throws ParamsException {
+        if (user.getActive() == 1) {
+            throw new ParamsException("Account is already activate.");
+        }
+    }
+
+    private void checkActivationExpired(ActivationCodeEntity code) throws ParamsException {
+        Date codeGeneratedOn = code.getInsertDate();
+        Date codeExpiresOn = DateUtils.addDays(new Date(), 2);
+        if (codeGeneratedOn.after(codeExpiresOn)) {
+            throw new ParamsException("Activation code has expired. You need to register again.");
+        }
+    }
+
+    private void activateAccount(UserEntity user) {
+        user.setActive(1);
+        usersRepo.save(user);
+    }
+
+    private String generateApprovalCode(ActivationCodeEntity code) {
+        String approvalCode = UUID.randomUUID().toString().toUpperCase();
+        code.setApprovalCode(approvalCode);
+        activationCodesRepo.save(code);
+        return approvalCode;
+    }
+
+    private void sendRegistrationApprovalEmail(String approvalCode) throws TechnicalException {
+        if (!mailProperties.getApproval().isEnabled()) {
+            log.info("Approval email is disabled!");
+            return;
+        }
+        try {
+            MimeMessage msg = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(msg, true);
+
+            helper.setTo(mailProperties.getApproval().getTo());
+            helper.setSubject(mailProperties.getRegister().getSubject());
+
+            String link = mailProperties.getApproval().getLink()
+                    .replaceAll("#APPROVAL_CODE", approvalCode);
+
+            String body = mailProperties.getApproval().getBody()
+                    .replaceAll("#APPROVAL_LINK", link);
+            helper.setText(body, true);
+
+            javaMailSender.send(msg);
+        } catch (MessagingException e) {
+            log.error("Could send approval confirmation email.", e);
             throw new TechnicalException("Could not register user.", e);
         }
     }
