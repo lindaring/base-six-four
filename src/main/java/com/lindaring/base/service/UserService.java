@@ -149,12 +149,12 @@ public class UserService {
 
     public void activateRegistration(ActivationRequest activationCode) throws TechnicalException, ParamsException {
         try {
-            ActivationCodeEntity code = getActivationCode(activationCode);
-            UserEntity user = code.getUser();
+            ActivationCodeEntity activation = getActivationCode(activationCode);
+            UserEntity user = activation.getUser();
             checkAccountActive(user);
-            checkActivationExpired(code);
+            checkActivationExpired(activation);
             activateAccount(user);
-            String approvalCode = generateApprovalCode(code);
+            String approvalCode = generateApprovalCode(activation);
             sendRegistrationApprovalEmail(approvalCode);
         } catch (ParamsException e) {
             throw e;
@@ -221,6 +221,62 @@ public class UserService {
         }
     }
 
+    public void approveRegistration(ActivationRequest approvalCode) throws TechnicalException, ParamsException {
+        try {
+            ActivationCodeEntity activation = getApprovalCode(approvalCode);
+            UserEntity user = activation.getUser();
+            checkAccountApproved(user);
+            approveAccount(user);
+            sendRegistrationWelcomeEmail(activation.getApprovalCode(), user.getUsername());
+        } catch (ParamsException | TechnicalException e) {
+            throw e;
+        } catch (Exception e) {
+            log.error("Could not approve registration.", e);
+            throw new TechnicalException("Could not approve registration user.", e);
+        }
+    }
+
+    private ActivationCodeEntity getApprovalCode(ActivationRequest activationCode) throws TechnicalException {
+        Optional<ActivationCodeEntity> codeOptional = activationCodesRepo.getActivationCodeByApprovalCode(activationCode.getCode());
+        return codeOptional.orElseThrow(() -> new TechnicalException("Failed to activate registration."));
+    }
+
+    private void checkAccountApproved(UserEntity user) throws ParamsException {
+        if (user.getActive() == 0) {
+            throw new ParamsException("Email has not been confirmed.");
+        } else if (user.getActive() == 2) {
+            throw new ParamsException("Account is already approved.");
+        }
+    }
+
+    private void approveAccount(UserEntity user) {
+        user.setActive(2);
+        usersRepo.save(user);
+    }
+
+    private void sendRegistrationWelcomeEmail(String approvalCode, String destinationEmail) throws TechnicalException {
+        if (!mailProperties.getWelcome().isEnabled()) {
+            log.info("Approval email is disabled!");
+            return;
+        }
+        try {
+            MimeMessage msg = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(msg, true);
+
+            helper.setTo(destinationEmail);
+            helper.setSubject(mailProperties.getWelcome().getSubject());
+
+            String body = mailProperties.getWelcome().getBody()
+                    .replaceAll("#LOGIN_LINK", mailProperties.getWelcome().getLink());
+            helper.setText(body, true);
+
+            javaMailSender.send(msg);
+        } catch (MessagingException e) {
+            log.error("Could send welcome email.", e);
+            throw new TechnicalException("Could not register user.", e);
+        }
+    }
+
     @Async
     public void recordVisit(HttpServletRequest httpRequest, UserDto userDto) {
         try {
@@ -244,20 +300,20 @@ public class UserService {
 
         Iterable<RoleEntity> dbRoles = rolesRepo.findAll();
         user.getRoles().forEach(roleType ->
-            {
-                // Map role type to role entity
-                final Optional<RoleEntity> optionalRoleEntity = StreamSupport.stream(dbRoles.spliterator(), false)
-                        .filter(dbRole -> dbRole.getDesc().equals(roleType.getShortDescription()))
-                        .findFirst();
-                // Add role to user roles list
-                if (optionalRoleEntity.isPresent()) {
-                    RoleEntity roleEntity = new RoleEntity();
-                    roleEntity.setId(optionalRoleEntity.get().getId());
-                    roleEntity.setDesc(optionalRoleEntity.get().getDesc());
-                    roleEntity.setInsertDate(new Date());
-                    roles.add(roleEntity);
+                {
+                    // Map role type to role entity
+                    final Optional<RoleEntity> optionalRoleEntity = StreamSupport.stream(dbRoles.spliterator(), false)
+                            .filter(dbRole -> dbRole.getDesc().equals(roleType.getShortDescription()))
+                            .findFirst();
+                    // Add role to user roles list
+                    if (optionalRoleEntity.isPresent()) {
+                        RoleEntity roleEntity = new RoleEntity();
+                        roleEntity.setId(optionalRoleEntity.get().getId());
+                        roleEntity.setDesc(optionalRoleEntity.get().getDesc());
+                        roleEntity.setInsertDate(new Date());
+                        roles.add(roleEntity);
+                    }
                 }
-            }
         );
 
         if (roles.isEmpty()) {

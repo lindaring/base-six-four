@@ -6,5 +6,9 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.Optional;
 
 public interface ActivationCodesRepo extends CrudRepository<ActivationCodeEntity, Long> {
+
     Optional<ActivationCodeEntity> getActivationCodeByCode(String code);
+
+    Optional<ActivationCodeEntity> getActivationCodeByApprovalCode(String approvalCode);
+
 }

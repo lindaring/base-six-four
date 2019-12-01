@@ -72,7 +72,12 @@ api:
       to: "lndsimelane@gmail.com"
       link: "http://lindaring.com/approval?code=#APPROVAL_CODE"
       subject: "Lindaring Tools Approval"
-      body: "<html><head><style>body{font-family:'proxima-nova','proximanova','helveticaneue','helvetica','arial',sans-serif;margin:0;padding:0;}div#header{background:#ffc107;}div#header>img{max-width:35px;float:left;margin:5px;}div#header>h1{float:left;margin:5px;padding:0;color: #fff;}.clear{clear:both;}div#content{padding:0 10px;}</style></head><body><div id='header'><img src='http://lindaring.com/logo.png'/><h1>Developer Tools</h1><div class='clear'></div></div><div id='content'><h1>User Request</h1><p>Hi,<br/><br/>Someone has requestedS to be part of the Lindaring Tools Family.</p><p>Click on the below link to approve the request:<br/><a href='#APPROVAL_LINK'>#APPROVAL_LINK</a></p><p>Regards,<br/><br/><i>Lindaring Tools Team</i></p></div></body></html>"
+      body: "<html><head><style>body{font-family:'proxima-nova','proximanova','helveticaneue','helvetica','arial',sans-serif;margin:0;padding:0;}div#header{background:#ffc107;}div#header>img{max-width:35px;float:left;margin:5px;}div#header>h1{float:left;margin:5px;padding:0;color: #fff;}.clear{clear:both;}div#content{padding:0 10px;}</style></head><body><div id='header'><img src='http://lindaring.com/logo.png'/><h1>Developer Tools</h1><div class='clear'></div></div><div id='content'><h1>User Request</h1><p>Hi,<br/><br/>Someone has requested to be part of the Lindaring Tools Family.</p><p>Click on the below link to approve the request:<br/><a href='#APPROVAL_LINK'>#APPROVAL_LINK</a></p><p>Regards,<br/><br/><i>Lindaring Tools Team</i></p></div></body></html>"
+    welcome:
+      enabled: true
+      link: "http://lindaring.com/login"
+      subject: "Lindaring Tools Account Approved"
+      body: "<html><head><style>body {font-family: 'proxima-nova', 'proximanova', 'helveticaneue', 'helvetica', 'arial', sans-serif;margin: 0;padding: 0;}div#header {background: #ffc107;}div#header > img {max-width: 35px;float: left;margin: 5px;}div#header > h1 {float: left;margin: 5px;padding: 0;color: #fff;}.clear {clear: both;}div#content {padding: 0 10px;}</style></head><body><div id='header'><img src='http://lindaring.com/logo.png'/><h1>Developer Tools</h1><div class='clear'></div></div><div id='content'><h1>Account Approved</h1><p>Howdie Partner,<br/><br/>Great news! Your account has been approved. You may now login in.</p><p><a href='#LOGIN_LINK'>#LOGIN_LINK</a></p><p>Regards,<br/><br/><i>Lindaring Tools Team</i></p></div></body></html>"
   geolocation:
     key: 4b0842278fdc1afebd2f1f27d309a8b9
     url: http://api.ipstack.com/
@@ -107,3 +112,6 @@ api:
     approval:
       link: "http://localhost:4200/approval?code=#APPROVAL_CODE"
       enabled: false
+    welcome:
+      enabled: true
+      link: "http://localhost:4200/login"
