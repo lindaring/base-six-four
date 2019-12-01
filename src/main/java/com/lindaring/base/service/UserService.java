@@ -100,7 +100,7 @@ public class UserService {
             newUser.setPassword(GeneralUtils.encryptPassword(user.getPassword()));
             newUser.setActive(0);
             newUser.setInsertDate(new Date());
-            newUser.setRoles(getUserRoles(user));
+            newUser.setRoles(mapUserRoles(user));
             return usersRepo.save(newUser);
         } catch (Exception e) {
             log.error("Could persist user details.", e);
@@ -239,22 +239,25 @@ public class UserService {
         }
     }
 
-    private List<RoleEntity> getUserRoles(RegisteredUser user) throws ParamsException {
+    private List<RoleEntity> mapUserRoles(RegisteredUser user) throws ParamsException {
         List<RoleEntity> roles = new ArrayList<>();
 
         Iterable<RoleEntity> dbRoles = rolesRepo.findAll();
         user.getRoles().forEach(roleType ->
-                StreamSupport.stream(dbRoles.spliterator(), false)
-                        .filter(dbRole -> dbRole.getDesc().equals(roleType.getFullDescription()))
-                        .findFirst()
-                        .map(dbRole -> {
-                            RoleEntity roleEntity = new RoleEntity();
-                            roleEntity.setId(dbRole.getId());
-                            roleEntity.setDesc(dbRole.getDesc());
-                            roleEntity.setInsertDate(new Date());
-                            roles.add(roleEntity);
-                            return null;
-                        })
+            {
+                // Map role type to role entity
+                final Optional<RoleEntity> optionalRoleEntity = StreamSupport.stream(dbRoles.spliterator(), false)
+                        .filter(dbRole -> dbRole.getDesc().equals(roleType.getShortDescription()))
+                        .findFirst();
+                // Add role to user roles list
+                if (optionalRoleEntity.isPresent()) {
+                    RoleEntity roleEntity = new RoleEntity();
+                    roleEntity.setId(optionalRoleEntity.get().getId());
+                    roleEntity.setDesc(optionalRoleEntity.get().getDesc());
+                    roleEntity.setInsertDate(new Date());
+                    roles.add(roleEntity);
+                }
+            }
         );
 
         if (roles.isEmpty()) {

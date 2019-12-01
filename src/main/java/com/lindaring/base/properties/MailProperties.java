@@ -1,6 +1,5 @@
 package com.lindaring.base.properties;
 
-import com.sun.org.apache.regexp.internal.RE;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
