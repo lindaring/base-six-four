@@ -171,7 +171,7 @@ public class UserService {
 
     private void checkAccountActive(UserEntity user) throws ParamsException {
         if (user.getActive() == 1) {
-            throw new ParamsException("Account is already activate.");
+            throw new ParamsException("Account has already been confirmed.");
         }
     }
 
@@ -227,7 +227,7 @@ public class UserService {
             UserEntity user = activation.getUser();
             checkAccountApproved(user);
             approveAccount(user);
-            sendRegistrationWelcomeEmail(activation.getApprovalCode(), user.getUsername());
+            sendRegistrationWelcomeEmail(user.getUsername());
         } catch (ParamsException | TechnicalException e) {
             throw e;
         } catch (Exception e) {
@@ -254,7 +254,7 @@ public class UserService {
         usersRepo.save(user);
     }
 
-    private void sendRegistrationWelcomeEmail(String approvalCode, String destinationEmail) throws TechnicalException {
+    private void sendRegistrationWelcomeEmail(String destinationEmail) throws TechnicalException {
         if (!mailProperties.getWelcome().isEnabled()) {
             log.info("Approval email is disabled!");
             return;
