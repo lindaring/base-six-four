@@ -300,20 +300,20 @@ public class UserService {
 
         Iterable<RoleEntity> dbRoles = rolesRepo.findAll();
         user.getRoles().forEach(roleType ->
-                {
-                    // Map role type to role entity
-                    final Optional<RoleEntity> optionalRoleEntity = StreamSupport.stream(dbRoles.spliterator(), false)
-                            .filter(dbRole -> dbRole.getDesc().equals(roleType.getShortDescription()))
-                            .findFirst();
-                    // Add role to user roles list
-                    if (optionalRoleEntity.isPresent()) {
-                        RoleEntity roleEntity = new RoleEntity();
-                        roleEntity.setId(optionalRoleEntity.get().getId());
-                        roleEntity.setDesc(optionalRoleEntity.get().getDesc());
-                        roleEntity.setInsertDate(new Date());
-                        roles.add(roleEntity);
-                    }
+            {
+                // Map role type to role entity
+                final Optional<RoleEntity> optionalRoleEntity = StreamSupport.stream(dbRoles.spliterator(), false)
+                        .filter(dbRole -> dbRole.getDesc().equals(roleType.getFullDescription()))
+                        .findFirst();
+                // Add role to user roles list
+                if (optionalRoleEntity.isPresent()) {
+                    RoleEntity roleEntity = new RoleEntity();
+                    roleEntity.setId(optionalRoleEntity.get().getId());
+                    roleEntity.setDesc(optionalRoleEntity.get().getDesc());
+                    roleEntity.setInsertDate(new Date());
+                    roles.add(roleEntity);
                 }
+            }
         );
 
         if (roles.isEmpty()) {
