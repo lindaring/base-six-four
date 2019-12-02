@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: local
+    active: live
   application:
     name: "base-six-four-api"
   jpa:

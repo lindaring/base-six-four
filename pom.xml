@@ -4,7 +4,7 @@
     
     <groupId>com.lindaring.base</groupId>
     <artifactId>base-six-four-api</artifactId>
-    <version>3.0.0-SNAPSHOT</version>
+    <version>1.0.4-RELEASE</version>
     <packaging>jar</packaging>
     
     <name>Base Six Four API</name>
