@@ -3,6 +3,7 @@ package com.lindaring.base.controller;
 import com.lindaring.base.dto.ActivationRequest;
 import com.lindaring.base.dto.GeneralResponse;
 import com.lindaring.base.dto.RegisteredUser;
+import com.lindaring.base.dto.Token;
 import com.lindaring.base.dto.UserDto;
 import com.lindaring.base.exception.ParamsException;
 import com.lindaring.base.exception.TechnicalException;
@@ -54,6 +55,13 @@ public class UserController {
     public ResponseEntity<GeneralResponse> approveRegistration(@RequestBody ActivationRequest code) throws TechnicalException, ParamsException {
         userService.approveRegistration(code);
         return new ResponseEntity<>(new GeneralResponse(true), HttpStatus.CREATED);
+    }
+
+    @PostMapping(value = "/login")
+    @ApiOperation(notes = "Authenticate user", value = "Authenticate user")
+    public ResponseEntity<Token> authenticateUser(@RequestBody RegisteredUser user) throws TechnicalException, ParamsException {
+        String token = userService.requestToken(user);
+        return new ResponseEntity<>(new Token(token), HttpStatus.CREATED);
     }
 
 }

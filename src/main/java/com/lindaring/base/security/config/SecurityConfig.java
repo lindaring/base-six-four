@@ -8,6 +8,7 @@ import com.lindaring.base.utils.GeneralUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -39,12 +40,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers(permittedUrls).permitAll()
             .antMatchers("/base-six-four/secure/v1/**").hasAnyRole("USER", "ADMIN")
             .and()
-            .addFilter(new JWTAuthenticationFilter(authenticationManager(), securityProperties))
+            .addFilter(new JWTAuthenticationFilter(customUserDetailsService, securityProperties))
             .addFilter(new JWTAuthorizationFilter(authenticationManager(), customUserDetailsService, securityProperties));
     }
 
     @Bean
     public PasswordEncoder passwordEncoder(){
         return GeneralUtils.getPasswordEncoder();
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 }

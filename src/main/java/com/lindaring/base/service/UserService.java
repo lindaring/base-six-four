@@ -17,6 +17,7 @@ import com.lindaring.base.repo.ActivationCodesRepo;
 import com.lindaring.base.repo.RolesRepo;
 import com.lindaring.base.repo.UsersRepo;
 import com.lindaring.base.repo.VisitorsRepo;
+import com.lindaring.base.security.service.CustomUserDetailsService;
 import com.lindaring.base.utils.GeneralUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DateUtils;
@@ -25,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
@@ -61,6 +63,9 @@ public class UserService {
 
     @Autowired
     private RabbitMQService rabbitMQService;
+
+    @Autowired
+    private CustomUserDetailsService userDetailsService;
 
     @Autowired
     private JavaMailSender javaMailSender;
@@ -369,5 +374,15 @@ public class UserService {
 
     public int getTodayHitsCount() {
         return getTodayHits().size();
+    }
+
+    public String requestToken(RegisteredUser user) throws TechnicalException {
+        try {
+            Authentication authentication = userDetailsService.authenticateUser(user);
+            return userDetailsService.getToken(authentication);
+        } catch (Exception e) {
+            log.error("Could not request jwt token.", e);
+            throw new TechnicalException("Failed to login.", e);
+        }
     }
 }
