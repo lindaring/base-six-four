@@ -26,6 +26,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -376,10 +378,13 @@ public class UserService {
         return getTodayHits().size();
     }
 
-    public String requestToken(RegisteredUser user) throws TechnicalException {
+    public String requestToken(RegisteredUser user) throws TechnicalException, ParamsException {
         try {
             Authentication authentication = userDetailsService.authenticateUser(user);
             return userDetailsService.getToken(authentication);
+        } catch (BadCredentialsException | InternalAuthenticationServiceException e) {
+            log.error("User supplied bad credentials [" + e.getMessage() + "]");
+            throw new ParamsException("Username and (or) password is incorrect.");
         } catch (Exception e) {
             log.error("Could not request jwt token.", e);
             throw new TechnicalException("Failed to login.", e);
