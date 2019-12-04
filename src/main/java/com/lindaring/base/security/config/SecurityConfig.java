@@ -32,7 +32,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/base-six-four/v1/cache/**",
                 "/base-six-four/v1/cronjob/**",
                 "/base-six-four/v1/year/**",
-                "/base-six-four/v1/url/**"
+                "/base-six-four/v1/url/**",
+                "/base-six-four/v1/user/**"
         };
 
         http.cors().and().csrf().disable()
